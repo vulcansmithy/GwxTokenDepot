@@ -7,7 +7,7 @@ ruby "2.5.1"
 gem "rails", "~> 5.2.1"
 
 # Use sqlite3 as the database for Active Record
-# gem "sqlite3"
+gem "sqlite3"
 
 gem "mongoid",  "7.0.2"
 gem "bson_ext", "1.5.1"
