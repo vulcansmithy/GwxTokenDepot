@@ -1,4 +1,4 @@
-class User
+class Player
   include Mongoid::Document
   
   field :first_name, type: String, default: nil
