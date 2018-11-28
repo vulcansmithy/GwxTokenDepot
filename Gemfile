@@ -40,7 +40,8 @@ group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   
-  gem "rspec-rails"
+  gem "rspec-rails", "3.8.1"   # https://github.com/rspec/rspec-rails
+  gem "guard-rspec", "4.7.3"   # https://github.com/guard/guard-rspec
 end
 
 group :development do
