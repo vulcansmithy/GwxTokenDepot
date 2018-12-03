@@ -43,6 +43,7 @@ group :development, :test do
   gem "rspec-rails",       "3.8.1"    # https://github.com/rspec/rspec-rails
   gem "guard-rspec",       "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails", "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
+  gem "faker",             "1.9.1"    # https://github.com/stympy/faker
 end
 
 group :development do
