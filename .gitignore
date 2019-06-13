@@ -29,3 +29,6 @@
 
 # Ignore generated files in the coverage directory
 /coverage/*
+
+# Ignore .rvmrc
+.rvmrc
