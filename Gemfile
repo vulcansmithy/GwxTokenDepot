@@ -53,12 +53,9 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
 end
 
-group :test do
-  gem "simplecov", "0.16.1", require: false   # https://github.com/colszowka/simplecov
-end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "versionist", "1.7.0"   # https://github.com/bploetz/versionist
+gem "versionist", "1.7.0"            # https://github.com/bploetz/versionist
+gem "money-tree", "0.10.0"           # https://github.com/GemHQ/money-tree
