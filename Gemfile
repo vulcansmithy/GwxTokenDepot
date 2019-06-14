@@ -44,6 +44,8 @@ group :development, :test do
   gem "guard-rspec",       "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails", "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
   gem "faker",             "1.9.1"    # https://github.com/stympy/faker
+  gem "awesome_print",     "1.8.0"    # https://github.com/awesome-print/awesome_print
+
 end
 
 group :development do
@@ -57,5 +59,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "versionist", "1.7.0"            # https://github.com/bploetz/versionist
-gem "money-tree", "0.10.0"           # https://github.com/GemHQ/money-tree
+gem "versionist",   "1.7.0"          # https://github.com/bploetz/versionist
+gem "money-tree",   "0.10.0"         # https://github.com/GemHQ/money-tree
+gem "bitcoin-ruby", "0.0.19"         # https://github.com/lian/bitcoin-ruby
