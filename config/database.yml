@@ -16,5 +16,3 @@ test:
 production:
   <<: *default
   database: gwx_token_depot_production
-  username: gwx_token_depot_
-  password: <%= ENV['gwx_token_depot_DATABASE_PASSWORD'] %>

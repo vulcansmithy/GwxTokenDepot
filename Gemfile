@@ -47,8 +47,8 @@ end
 group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring", "2.1.0"
+  gem "spring-watcher-listen", "2.0.1"
 end
 
 
@@ -58,3 +58,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "versionist",   "1.7.0"          # https://github.com/bploetz/versionist
 gem "money-tree",   "0.10.0"         # https://github.com/GemHQ/money-tree
 gem "bitcoin-ruby", "0.0.19"         # https://github.com/lian/bitcoin-ruby
+gem "aasm",         "5.0.5"          # https://github.com/aasm/aasm
