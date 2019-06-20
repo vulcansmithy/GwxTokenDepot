@@ -1,0 +1,129 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/top_up_transactions": {
+      "get": {
+        "summary": "Retrieve all Top Up Transactions for a particular User",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Retrieve all Top Up Transactions for a particular User.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "description": "the id of the user",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return All Top Up Transaction(s) for a particular user."
+          },
+          "400": {
+            "description": "Missing 'user_id' parameter."
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Top Up Transaction",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Create a new Top Up Transaction.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "top_up_transaction",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                },
+                "top_up_quantity": {
+                  "type": "number"
+                },
+                "transaction_type": {
+                  "type": "string"
+                },
+                "gwx_wallet_address": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user_id",
+                "top_up_quantity",
+                "transaction_type",
+                "gwx_wallet_address"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New Top Up Transaction successfully created."
+          },
+          "422": {
+            "description": "Transaction failed."
+          }
+        }
+      }
+    },
+    "/v1/top_up_transactions/{:id}": {
+      "get": {
+        "summary": "Retreive a particular TopUpTransaction",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Retreive a particular TopUpTransaction.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the TopUpTransaction 'id'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a specific TopUpTransaction.",
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "230",
+                  "type": "top_up_transaction",
+                  "attributes": {
+                    "user_id": "417",
+                    "top_up_quantity": "500.0",
+                    "transaction_type": "btc",
+                    "top_up_transaction_hash": "nil",
+                    "top_up_transaction_at": "nil",
+                    "gwx_transaction_hash": "nil",
+                    "gwx_transaction_at": "nil",
+                    "status": "pending"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -28,5 +28,6 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
     params.permit(:user_id,    
       :top_up_quantity, 
       :transaction_type,
-      :top_up_receiving_wallet_address,  
       :gwx_wallet_address)
+  end
+end
