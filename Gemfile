@@ -61,5 +61,6 @@ gem "bitcoin-ruby",             "0.0.19"   # https://github.com/lian/bitcoin-rub
 gem "aasm",                     "5.0.5"    # https://github.com/aasm/aasm
 gem "active_model_serializers", "0.10.9"   # https://github.com/rails-api/active_model_serializers
 gem "fast_jsonapi",             "1.5"      # https://github.com/Netflix/fast_jsonap
+gem "rswag",                    "2.0.5"    # https://github.com/domaindrivendev/rswag
 
 
