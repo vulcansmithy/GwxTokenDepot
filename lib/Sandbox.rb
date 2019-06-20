@@ -71,8 +71,9 @@ class Sandbox
     puts "BTC Private Key....... '#{private_key}'"
     puts "BTC Public Key........ '#{public_key }'"
   end
+
+
 =end
-  
   def wb1
     master = MoneyTree::Master.new
     master_private_key = master.to_bip32(:private)
