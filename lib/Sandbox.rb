@@ -97,16 +97,28 @@ class Sandbox
   end 
   
   def wb2
+  
     master = MoneyTree::Master.new(network: :bitcoin_testnet)
-    master_private_key = master.to_bip32(:private, network: :bitcoin_testnet)
-    master_public_key  = master.to_bip32(network: :bitcoin_testnet)
+    master_wallet_address = master.to_address(network: :bitcoin_testnet)
+    master_private_key    = master.to_bip32(:private, network: :bitcoin_testnet)
+    master_public_key     = master.to_bip32(network: :bitcoin_testnet)
 
-    puts "master public  key... #{master_public_key }"    
-    puts "master private key... #{master_private_key}"
+    puts "master wallet address... #{master_wallet_address}"
+    puts "master public  key...... #{master_public_key }"    
+    puts "master private key...... #{master_private_key}"
+  
 
-#   @node = MoneyTree::Node.from_bip32(master_private_key)
-    @node = MoneyTree::Node.from_bip32("tprv8ZgxMBicQKsPf28ydAVh8ty4rbda272YFzGfmWwHufNaqDKTHJ8gSyKQMJ5E5fzqBVixXh7QZZXu7PfYdJoWi9gW5oWubBx2fSaFyZhN2YQ")
-    
+    @node = MoneyTree::Node.from_bip32(master_private_key)
+#   @node = MoneyTree::Node.from_bip32("tprv8ZgxMBicQKsPf28ydAVh8ty4rbda272YFzGfmWwHufNaqDKTHJ8gSyKQMJ5E5fzqBVixXh7QZZXu7PfYdJoWi9gW5oWubBx2fSaFyZhN2YQ")
+   
+=begin   
+    master_wallet_address = @node.to_address(network: :bitcoin_testnet)
+    master_private_key    = @node.to_bip32(:private, network: :bitcoin_testnet)
+    master_public_key     = @node.to_bip32(network: :bitcoin_testnet)
+    puts "master wallet address... #{master_wallet_address}"
+    puts "master public  key...... #{master_public_key }"    
+    puts "master private key...... #{master_private_key}"
+=end    
       
     i = 0
     20.times do
