@@ -10,6 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_06_18_040939) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "top_up_transactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.decimal "quantity", precision: 10, scale: 6
+    t.integer "transaction_type"
+    t.string "top_up_receiving_wallet_address"
+    t.string "top_up_transaction_hash"
+    t.datetime "top_up_transaction_at"
+    t.string "gwx_wallet_address"
+    t.string "gwx_transaction_hash"
+    t.datetime "gwx_transaction_at"
+    t.string "aasm_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
