@@ -1,9 +1,12 @@
 class Api::V1::TopUpTransactionsController < Api::V1::BaseController
 
   def index
-    # @TODO enable pagination
-    top_up_transactions = TopUpTransaction.all
-    success_response(TopUpTransactionSerializer.new(top_up_transactions).serialized_json)
+    if params[:user_id]
+      top_up_transactions = TopUpTransaction.where(user_id: params[:user_id])
+      success_response(TopUpTransactionSerializer.new(top_up_transactions).serialized_json)
+    else
+      error_response("", "Missing 'user_id' parameter.", :bad_request)
+    end    
   end
   
   def create
