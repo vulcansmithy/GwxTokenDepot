@@ -36,11 +36,11 @@ group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   
-  gem "rspec-rails",       "3.8.1"    # https://github.com/rspec/rspec-rails
-  gem "guard-rspec",       "4.7.3"    # https://github.com/guard/guard-rspec
-  gem "factory_bot_rails", "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
-  gem "faker",             "1.9.1"    # https://github.com/stympy/faker
-  gem "awesome_print",     "1.8.0"    # https://github.com/awesome-print/awesome_print
+  gem "rspec-rails",            "3.8.1"    # https://github.com/rspec/rspec-rails
+  gem "guard-rspec",            "4.7.3"    # https://github.com/guard/guard-rspec
+  gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
+  gem "faker",                  "1.9.1"    # https://github.com/stympy/faker
+  gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
 
 end
 
@@ -55,7 +55,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "versionist",   "1.7.0"          # https://github.com/bploetz/versionist
-gem "money-tree",   "0.10.0"         # https://github.com/GemHQ/money-tree
-gem "bitcoin-ruby", "0.0.19"         # https://github.com/lian/bitcoin-ruby
-gem "aasm",         "5.0.5"          # https://github.com/aasm/aasm
+gem "versionist",               "1.7.0"    # https://github.com/bploetz/versionist
+gem "money-tree",               "0.10.0"   # https://github.com/GemHQ/money-tree
+gem "bitcoin-ruby",             "0.0.19"   # https://github.com/lian/bitcoin-ruby
+gem "aasm",                     "5.0.5"    # https://github.com/aasm/aasm
+gem "active_model_serializers", "0.10.9"   # https://github.com/rails-api/active_model_serializers
+gem "fast_jsonapi",             "1.5"      # https://github.com/Netflix/fast_jsonap
+
+

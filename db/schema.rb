@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 2019_06_18_040939) do
 
   create_table "top_up_transactions", force: :cascade do |t|
     t.integer "user_id"
-    t.decimal "payment_quantity", precision: 10, scale: 6
+    t.decimal "top_up_quantity", precision: 10, scale: 6
     t.integer "transaction_type"
-    t.string "payment_receiving_wallet_address"
-    t.string "payment_transaction_hash"
-    t.datetime "payment_transaction_at"
+    t.string "top_up_receiving_wallet_address"
+    t.string "top_up_transaction_hash"
+    t.datetime "top_up_transaction_at"
     t.string "gwx_wallet_address"
     t.string "gwx_transaction_hash"
     t.datetime "gwx_transaction_at"
