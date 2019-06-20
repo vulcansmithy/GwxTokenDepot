@@ -7,7 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -26,9 +25,3 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# Ignore generated files in the coverage directory
-/coverage/*
-
-# Ignore .rvmrc
-.rvmrc
