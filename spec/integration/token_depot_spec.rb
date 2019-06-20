@@ -30,11 +30,11 @@ describe "Gameworks Token Depot API" do
         type: :object,
         properties: {
                      user_id: { type: :string },
-             top_up_quantity: { type: :number },
+                    quantity: { type: :number },
             transaction_type: { type: :string },
           gwx_wallet_address: { type: :string },
         },
-        required: ["user_id", "top_up_quantity", "transaction_type", "gwx_wallet_address"]
+        required: ["user_id", "quantity", "transaction_type", "gwx_wallet_address"]
       }
       
       response "200", "New Top Up Transaction successfully created." do
@@ -62,7 +62,7 @@ describe "Gameworks Token Depot API" do
                     "type" => "top_up_transaction",
               "attributes" => {
                                 "user_id" => "417",
-                        "top_up_quantity" => "500.0",
+                        "quantity" => "500.0",
                        "transaction_type" => "btc",
                 "top_up_transaction_hash" => "nil",
                   "top_up_transaction_at" => "nil",

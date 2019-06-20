@@ -3,7 +3,7 @@ class TopUpTransactionSerializer < ActiveModel::Serializer
   include FastJsonapi::ObjectSerializer
 
   attributes :user_id,
-    :top_up_quantity,
+    :quantity,
     :transaction_type,
     :top_up_transaction_hash,
     :top_up_transaction_at,

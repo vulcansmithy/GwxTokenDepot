@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_040939) do
 
   create_table "top_up_transactions", force: :cascade do |t|
     t.integer "user_id"
-    t.decimal "top_up_quantity", precision: 10, scale: 6
+    t.decimal "quantity", precision: 10, scale: 6
     t.integer "transaction_type"
     t.string "top_up_receiving_wallet_address"
     t.string "top_up_transaction_hash"
