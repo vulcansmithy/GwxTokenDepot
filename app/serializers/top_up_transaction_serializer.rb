@@ -9,6 +9,7 @@ class TopUpTransactionSerializer < ActiveModel::Serializer
   attributes :user_id,
     :quantity,
     :transaction_type,
+    :top_up_receiving_wallet_address,
     :top_up_transaction_hash,
     :top_up_transaction_at,
     :gwx_transaction_hash,
