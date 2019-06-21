@@ -2,6 +2,10 @@ class TopUpTransactionSerializer < ActiveModel::Serializer
 
   include FastJsonapi::ObjectSerializer
 
+  attribute :transaction_id do |transaction|
+    transaction.id
+  end
+
   attributes :user_id,
     :quantity,
     :transaction_type,
