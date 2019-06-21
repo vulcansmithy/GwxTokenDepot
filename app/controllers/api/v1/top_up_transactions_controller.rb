@@ -10,7 +10,12 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
   end
   
   def create
-    # @TODO to be implemented
+    new_top_up_transaction = TopUpTransaction.new(top_up_transactions_params)
+    if new_top_up_transaction.save
+      success_response(TopUpTransactionSerializer.new(new_top_up_transaction).serialized_json)
+    else
+      error_response("Unable to create a new TopUpTransaction", new_top_up_transaction.errors.full_messages, :bad_request)
+    end
   end
   
   def show
