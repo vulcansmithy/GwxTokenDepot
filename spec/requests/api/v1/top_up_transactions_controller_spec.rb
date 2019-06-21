@@ -12,11 +12,11 @@ describe Api::V1::TopUpTransactionsController do
       gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJW"
     }
     
-    
     # call the API endpoint
     post "/top_up_transactions", params: payload
     
-    expect(response.status).to eq 200
+    # make sure the response status was 201 or :created
+    expect(response.status).to eq 201
     
     result = JSON.parse(response.body)
     puts "@DEBUG L:#{__LINE__}   #{ap result}"
