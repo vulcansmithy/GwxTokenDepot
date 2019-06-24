@@ -38,7 +38,6 @@ class TopUpTransaction < ApplicationRecord
       end
       
       after do
-puts "@DEBUG L:#{__LINE__}   assign_payment_receiving_wallet:after... #{ap self}"
       end
     end  
     
@@ -46,7 +45,6 @@ puts "@DEBUG L:#{__LINE__}   assign_payment_receiving_wallet:after... #{ap self}
       transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
 
       before do
-puts "@DEBUG L:#{__LINE__}   start_listening_for_incoming_transfer:before... #{ap self}"
         TopUpTransactionWorker.perform_async(self.id)
       end
       
