@@ -29,11 +29,13 @@ class TopUpTransaction < ApplicationRecord
       
       before do
         begin  
-          coin_service = "#{self.transaction_type.titlecase}UtilService".constantize.new
+          coin_util_service = "#{self.transaction_type.titlecase}UtilService".constantize.new
         rescue NameError => e
-          raise TopUpTransactionError, "There was no corresponding UtilService for specified transaction type '#{transaction_type}'."
+          raise TopUpTransactionError, e.message
+        rescue Exception => e   
+          raise TopUpTransactionError, e.message
         else 
-          coin_service.assign_receiving_wallet(self)
+          coin_util_service.assign_receiving_wallet(self)
         end  
       end
       
@@ -45,7 +47,13 @@ class TopUpTransaction < ApplicationRecord
       transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
 
       before do
-        TopUpTransactionWorker.perform_async(self.id)
+        begin  
+          Object.const_get("#{self.transaction_type.titlecase}TransactionWorker").send(:perform_async, [self.id])
+        rescue NameError => e
+          raise TopUpTransactionError, e.message
+        rescue Exception => e   
+          raise TopUpTransactionError, e.message
+        end  
       end
       
       after do
