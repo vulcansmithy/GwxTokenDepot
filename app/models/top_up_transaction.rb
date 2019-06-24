@@ -4,7 +4,7 @@ class TopUpTransaction < ApplicationRecord
 
   class TopUpTransactionError < StandardError; end
   
-  TRANSACTION_TYPES = [:btc, :eth, :xem]
+  TRANSACTION_TYPES = [:btc, :eth, :xem].freeze
   
   enum transaction_type: TRANSACTION_TYPES
   
