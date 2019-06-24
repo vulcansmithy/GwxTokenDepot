@@ -10,5 +10,4 @@ class XemTransactionWorker
     puts "@DEBUG L:#{__LINE__}   xem_transaction: #{ap xem_transaction}"
   end
 
-
 end

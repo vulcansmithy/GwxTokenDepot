@@ -10,5 +10,4 @@ class EthTransactionWorker
     puts "@DEBUG L:#{__LINE__}   eth_transaction: #{ap eth_transaction}"
   end
 
-
 end
