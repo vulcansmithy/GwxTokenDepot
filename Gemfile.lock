@@ -210,9 +210,16 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.1)
   rspec-rails (= 3.8.1)
+<<<<<<< HEAD
+  rswag (= 2.0.5)
+  simplecov (= 0.16.1)
+  spring (= 2.1.0)
+  spring-watcher-listen (= 2.0.1)
+=======
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+>>>>>>> develop
   tzinfo-data
   versionist (= 1.7.0)
 
