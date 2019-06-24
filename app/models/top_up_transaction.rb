@@ -30,8 +30,11 @@ class TopUpTransaction < ApplicationRecord
       before do
         begin
           coin_service = "#{transaction_type.titlecase}UtilService".constantize.new
-          self.top_up_receiving_wallet_address = coin_service.assign_receiving_wallet
-          self.save
+          coin_service.assign_receiving_wallet(self)
+
+          ##
+          puts "@DEBUG L:#{__LINE__}   #{ap self}"
+          ##
         rescue NameError => e
           raise TopUpTransactionError, "There was no corresponding UtilService for specified transaction type '#{transaction_type}'."
         end  
