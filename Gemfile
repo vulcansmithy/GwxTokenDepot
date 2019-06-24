@@ -6,7 +6,11 @@ ruby "2.5.1"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "~> 5.2.1"
 
-gem "pg", "1.1.4"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3"
+
+gem "mongoid",  "7.0.2"
+gem "bson_ext", "1.5.1"
 
 # Use Puma as the app server
 gem "puma", "~> 3.11"
@@ -36,6 +40,7 @@ group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   
+<<<<<<< HEAD
   gem "rspec-rails",            "3.8.1"    # https://github.com/rspec/rspec-rails
   gem "guard-rspec",            "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
@@ -44,25 +49,23 @@ group :development, :test do
   
   # https://github.com/colszowka/simplecov
   gem "simplecov",              "0.16.1", require: false   
+=======
+  gem "rspec-rails",       "3.8.1"    # https://github.com/rspec/rspec-rails
+  gem "guard-rspec",       "4.7.3"    # https://github.com/guard/guard-rspec
+  gem "factory_bot_rails", "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
+  gem "faker",             "1.9.1"    # https://github.com/stympy/faker
+>>>>>>> develop
 end
 
 group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring", "2.1.0"
-  gem "spring-watcher-listen", "2.0.1"
+  gem "spring"
+  gem "spring-watcher-listen", "~> 2.0.0"
 end
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "versionist",               "1.7.0"    # https://github.com/bploetz/versionist
-gem "money-tree",               "0.10.0"   # https://github.com/GemHQ/money-tree
-gem "bitcoin-ruby",             "0.0.19"   # https://github.com/lian/bitcoin-ruby
-gem "aasm",                     "5.0.5"    # https://github.com/aasm/aasm
-gem "active_model_serializers", "0.10.9"   # https://github.com/rails-api/active_model_serializers
-gem "fast_jsonapi",             "1.5"      # https://github.com/Netflix/fast_jsonap
-gem "rswag",                    "2.0.5"    # https://github.com/domaindrivendev/rswag
-
-
+gem "versionist", "1.7.0"   # https://github.com/bploetz/versionist
