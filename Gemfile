@@ -41,8 +41,9 @@ group :development, :test do
   gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
   gem "faker",                  "1.9.1"    # https://github.com/stympy/faker
   gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
-  gem "simplecov"#, '0.16.1', require: false   # https://github.com/colszowka/simplecov
-
+  
+  # https://github.com/colszowka/simplecov
+  gem "simplecov",              "0.16.1", require: false   
 end
 
 group :development do
