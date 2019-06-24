@@ -38,7 +38,6 @@ class TopUpTransaction < ApplicationRecord
       end
       
       after do
-        puts "@DEBUG L:#{__LINE__}   Running after 'assign_payment_receiving_wallet'"
       end
     end  
     
@@ -46,11 +45,9 @@ class TopUpTransaction < ApplicationRecord
       transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
       
       before do
-        puts "@DEBUG L:#{__LINE__}   Running before 'check_for_incoming_tranfer'"
       end
       
       after do
-        puts "@DEBUG L:#{__LINE__}   Running after 'check_for_incoming_tranfer'"
       end
     end
     
