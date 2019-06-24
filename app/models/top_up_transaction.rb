@@ -4,7 +4,7 @@ class TopUpTransaction < ApplicationRecord
 
   class TopUpTransactionError < StandardError; end
   
-  TRANSACTION_TYPES = [:btc, :eth, :nem]
+  TRANSACTION_TYPES = [:btc, :eth, :xem]
   
   enum transaction_type: TRANSACTION_TYPES
   
@@ -28,15 +28,12 @@ class TopUpTransaction < ApplicationRecord
       transitions from: :initiated, to: :payment_receiving_wallet_assigned
       
       before do
-        begin
-          coin_service = "#{transaction_type.titlecase}UtilService".constantize.new
-          coin_service.assign_receiving_wallet(self)
-
-          ##
-          puts "@DEBUG L:#{__LINE__}   #{ap self}"
-          ##
+        begin  
+          coin_service = "#{self.transaction_type.titlecase}UtilService".constantize.new
         rescue NameError => e
           raise TopUpTransactionError, "There was no corresponding UtilService for specified transaction type '#{transaction_type}'."
+        else 
+          coin_service.assign_receiving_wallet(self)
         end  
       end
       
@@ -87,5 +84,5 @@ class TopUpTransaction < ApplicationRecord
     
     return result
   end
-
+  
 end

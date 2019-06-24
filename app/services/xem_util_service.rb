@@ -1,7 +1,8 @@
 class XemUtilService < BaseUtilService
   
-  def call
-    puts "@DEBUG L:#{__LINE__}   Running XemUtilService..."
-  end
+  class XemUtilServiceError < StandardError; end
+
+  def assign_receiving_wallet(transaction)
+  end  
   
 end

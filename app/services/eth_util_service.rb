@@ -1,7 +1,8 @@
 class EthUtilService < BaseUtilService
   
-  def call
-    puts "@DEBUG L:#{__LINE__}   Running EthUtilService..."
-  end
+  class EthUtilServiceError < StandardError; end
 
+  def assign_receiving_wallet(transaction)
+  end  
+  
 end
