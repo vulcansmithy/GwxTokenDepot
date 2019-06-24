@@ -47,13 +47,7 @@ class TopUpTransaction < ApplicationRecord
       transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
 
       before do
-        begin  
-          Object.const_get("#{self.transaction_type.titlecase}TransactionWorker").send(:perform_async, [self.id])
-        rescue NameError => e
-          raise TopUpTransactionError, e.message
-        rescue Exception => e   
-          raise TopUpTransactionError, e.message
-        end  
+        schedule_the_appropriate_job(self.id)
       end
       
       after do
@@ -91,6 +85,16 @@ class TopUpTransaction < ApplicationRecord
     end
     
     return result
+  end
+  
+  def schedule_the_appropriate_job(transaction_id)
+    begin  
+      Object.const_get("#{self.transaction_type.titlecase}TransactionWorker").send(:perform_async, [transaction_id])
+    rescue NameError => e
+      raise TopUpTransactionError, e.message
+    rescue Exception => e   
+      raise TopUpTransactionError, e.message
+    end  
   end
   
 end

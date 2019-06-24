@@ -10,5 +10,4 @@ class BtcTransactionWorker
     puts "@DEBUG L:#{__LINE__}   btc_transaction: #{ap btc_transaction}"
   end
 
-
 end
