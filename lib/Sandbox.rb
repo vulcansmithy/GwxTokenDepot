@@ -17,6 +17,7 @@ require "sidekiq/api"
 
 class Sandbox
   
+=begin  
   def main
     # seed_hex = "d3bd6fed7767dd5bf9649216fe0e4668f2e0672aa694b174bd279dc2ee428523"
     
@@ -36,7 +37,6 @@ class Sandbox
     end
   end
 
-=begin  
   def workbench1
     seed_hex = "d3bd6fed7767dd5bf9649216fe0e4668f2e0672aa694b174bd279dc2ee428523"
     master   = MoneyTree::Master.new(network: :bitcoin_testnet, seed_hex: seed_hex)
@@ -75,8 +75,6 @@ class Sandbox
     puts "BTC Public Key........ '#{public_key }'"
   end
 
-
-=end
   def wb1
     master = MoneyTree::Master.new
     master_private_key = master.to_bip32(:private)
@@ -115,14 +113,12 @@ class Sandbox
     @node = MoneyTree::Node.from_bip32(master_private_key)
 #   @node = MoneyTree::Node.from_bip32("tprv8ZgxMBicQKsPf28ydAVh8ty4rbda272YFzGfmWwHufNaqDKTHJ8gSyKQMJ5E5fzqBVixXh7QZZXu7PfYdJoWi9gW5oWubBx2fSaFyZhN2YQ")
    
-=begin   
-    master_wallet_address = @node.to_address(network: :bitcoin_testnet)
-    master_private_key    = @node.to_bip32(:private, network: :bitcoin_testnet)
-    master_public_key     = @node.to_bip32(network: :bitcoin_testnet)
-    puts "master wallet address... #{master_wallet_address}"
-    puts "master public  key...... #{master_public_key }"    
-    puts "master private key...... #{master_private_key}"
-=end    
+#   master_wallet_address = @node.to_address(network: :bitcoin_testnet)
+#   master_private_key    = @node.to_bip32(:private, network: :bitcoin_testnet)
+#   master_public_key     = @node.to_bip32(network: :bitcoin_testnet)
+#   puts "master wallet address... #{master_wallet_address}"
+#   puts "master public  key...... #{master_public_key }"    
+#   puts "master private key...... #{master_private_key}"
       
     i = 0
     20.times do
@@ -177,4 +173,28 @@ class Sandbox
       puts "@DEBUG L:#{__LINE__}   result: #{result}"
     end  
   end
+  
+  def wb6
+    master_private_key = Rails.application.secrets.btc_master_private_key
+    parent_node = MoneyTree::Node.from_bip32(master_private_key)
+    
+    child_node = parent_node.node_for_path("m/0/0")
+    testnet_wallet_address = child_node.to_address(network: :bitcoin_testnet)
+    mainnet_wallet_address = child_node.to_address
+    
+    puts "@DEBUG L:#{__LINE__}   testnet_wallet_address: #{testnet_wallet_address}"
+    puts "@DEBUG L:#{__LINE__}   mainnet_wallet_address: #{mainnet_wallet_address}"
+    
+    wallet_address = 
+      if Rails.env.production?
+        child_node.to_address
+      else
+        child_node.to_address(network: :bitcoin_testnet)
+      end  
+        
+    
+    puts "@DEBUG L:#{__LINE__}   wallet_address: #{wallet_address}"
+  end
+=end  
+
 end

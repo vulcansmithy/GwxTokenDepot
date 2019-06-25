@@ -11,7 +11,12 @@ class BtcUtilService < BaseUtilService
     if result.empty?
       child_node  = parent_node.node_for_path("m/0/0")
       
-      transaction.top_up_receiving_wallet_address = child_node.to_address(network: :bitcoin_testnet)
+      transaction.top_up_receiving_wallet_address = 
+        if Rails.env.production? 
+          child_node.to_address 
+        else
+          child_node.to_address(network: :bitcoin_testnet)
+        end  
       transaction.bip32_address_path = "m/0/0"
     else
       # retrieve the last node count
@@ -26,7 +31,12 @@ class BtcUtilService < BaseUtilService
       child_node = parent_node.node_for_path(bip32_address_path)
 
       # save the receiving wallet_address
-      transaction.top_up_receiving_wallet_address = child_node.to_address(network: :bitcoin_testnet)
+      transaction.top_up_receiving_wallet_address = 
+        if Rails.env.production? 
+          child_node.to_address 
+        else
+          child_node.to_address(network: :bitcoin_testnet)
+        end  
       
       # save the bip32_address_path
       transaction.bip32_address_path = bip32_address_path
