@@ -35,15 +35,16 @@ gem "bootsnap", ">= 1.1.0", require: false
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
-  
+
+  # https://github.com/colszowka/simplecov
+  gem "simplecov",              "0.16.1", require: false   
+
   gem "rspec-rails",            "3.8.1"    # https://github.com/rspec/rspec-rails
   gem "guard-rspec",            "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
-  gem "faker",                  "1.9.1"    # https://github.com/stympy/faker
+  gem "faker",                  "1.9.4"    # https://github.com/stympy/faker
   gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
-  
-  # https://github.com/colszowka/simplecov
-  gem "simplecov",              "0.16.1", require: false   
+  gem "timecop",                "0.9.1"    # https://github.com/travisjeffery/timecop 
 end
 
 group :development do

@@ -4,7 +4,9 @@ class TopUpTransaction < ApplicationRecord
 
   class TopUpTransactionError < StandardError; end
   
-  TRANSACTION_TYPES = [:btc, :eth, :xem].freeze
+  TRANSACTION_TYPES  = [:btc, :eth, :xem].freeze
+  SCHEDULED_INTERVAL = Rails.env.production? ? 15.minutes : 30.seconds
+  RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 20.minutes
   
   enum transaction_type: TRANSACTION_TYPES
   
@@ -58,10 +60,20 @@ class TopUpTransaction < ApplicationRecord
     
     event :confirm_transaction_successful do
       transitions from: :pending, to: :transaction_successful
+      
+      after do
+        # save the updated state
+        self.save
+      end
     end
     
     event :set_transaction_unssuccesful do
       transitions from: :pending, to: :transaction_unsuccessful
+      
+      after do
+        # save the updated state
+        self.save
+      end
     end  
     
     event :transfer_gwx_to_gwx_wallet do
@@ -89,7 +101,10 @@ class TopUpTransaction < ApplicationRecord
   
   def schedule_the_appropriate_job(transaction)
     begin  
-      Object.const_get("#{transaction.transaction_type.titlecase}TransactionWorker").send(:perform_async, [transaction.id])
+
+      worker_object = "#{transaction.transaction_type.titlecase}TransactionWorker".constantize.new
+      worker_object.class.perform_at(SCHEDULED_INTERVAL, transaction.id)
+
     rescue NameError => e
       raise TopUpTransactionError, e.message
     rescue Exception => e   

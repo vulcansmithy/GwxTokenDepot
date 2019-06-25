@@ -1,4 +1,6 @@
 require "bitcoin"
+require "faker"
+require "sidekiq/api"
 
 =begin
   - https://bitcoin.stackexchange.com/questions/43283/ruby-how-do-i-create-a-wallet-and-import-an-electrum-seed-using-money-tree-gem
@@ -10,6 +12,7 @@ require "bitcoin"
   - https://stackoverflow.com/questions/48064914/how-to-check-a-bitcoin-wallet-balance-from-first-generated-address-m-44-0-0
   - https://www.blockonomics.co/views/api.html#limits
   - https://blockcypher.github.io/documentation/
+  - https://makandracards.com/makandra/29437-enqueue-sidekiq-jobs-dynamically
 =end
 
 class Sandbox
@@ -135,4 +138,43 @@ class Sandbox
     end
   end   
 
+  def wb3
+    payload = {
+      body: {
+                   user_id: 999,
+                  quantity: Faker::Number.decimal(3, 6).to_f,
+          transaction_type: "btc",
+        gwx_wallet_address: "T#{Faker::Blockchain::Bitcoin.address.upcase}"
+      }
+    }
+
+    response = HTTParty.post("http://localhost:3000//top_up_transactions.json", payload)
+    puts "@DEBUG L:#{__LINE__}   response.code: #{response.code}"
+  end
+  
+  def wb4
+    scheduled_set = Sidekiq::ScheduledSet.new
+    puts "@DEBUG L:#{__LINE__}   scheduled_set.size: #{scheduled_set.size}"
+    
+    retry_set = Sidekiq::RetrySet.new
+    puts "@DEBUG L:#{__LINE__}   retry_set.size: #{retry_set.size}"
+    
+    dead_set = Sidekiq::DeadSet.new
+    puts "@DEBUG L:#{__LINE__}   dead_set.size: #{dead_set.size}"
+  end  
+  
+  def wb5
+    from = Time.zone.parse("2019-06-25 00:00:00 UTC")
+    puts "@DEBUG L:#{__LINE__}   from: #{from}"
+    
+    to = from + 5.hours
+    puts "@DEBUG L:#{__LINE__}     to: #{to}"
+    
+    Timecop.travel(Time.zone.parse("2019-06-25 05:00:00 UTC"))  do
+      now = Time.zone.now
+      
+      result = (from..to).cover?(now)
+      puts "@DEBUG L:#{__LINE__}   result: #{result}"
+    end  
+  end
 end
