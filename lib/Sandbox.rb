@@ -138,7 +138,7 @@ class Sandbox
     payload = {
       body: {
                    user_id: 999,
-                  quantity: Faker::Number.decimal(3, 6).to_f,
+                  quantity_to_receive: Faker::Number.decimal(3, 6).to_f,
           transaction_type: "btc",
         gwx_wallet_address: "T#{Faker::Blockchain::Bitcoin.address.upcase}"
       }
@@ -258,10 +258,11 @@ class Sandbox
     gwx_wallet = "#{Faker::Blockchain::Bitcoin.address.upcase}"
     payload = {
       body: {
-                   user_id: 101,
-                  quantity: 0.05775990,
-          transaction_type: "btc",
-        gwx_wallet_address: gwx_wallet
+                    user_id: 101,
+        quantity_to_receive: 0.05775990,
+            gwx_to_transfer: 10.0,
+           transaction_type: "btc",
+         gwx_wallet_address: gwx_wallet
       }
     }
 
@@ -281,10 +282,11 @@ class Sandbox
     gwx_wallet = "#{Faker::Blockchain::Bitcoin.address.upcase}"
     payload = {
       body: {
-                   user_id: 101,
-                  quantity: 0.07545732,
-          transaction_type: "btc",
-        gwx_wallet_address: gwx_wallet
+                    user_id: 101,
+        quantity_to_receive: 0.07545732,
+            gwx_to_transfer: 20.0,
+           transaction_type: "btc",
+         gwx_wallet_address: gwx_wallet
       }
     }
 
@@ -304,10 +306,11 @@ class Sandbox
     gwx_wallet = "#{Faker::Blockchain::Bitcoin.address.upcase}"
     payload = {
       body: {
-                   user_id: 101,
-                  quantity: 0.00010001,
-          transaction_type: "btc",
-        gwx_wallet_address: gwx_wallet
+                    user_id: 101,
+        quantity_to_receive: 0.00010001,
+            gwx_to_transfer: 30.0,
+            transaction_type: "btc",
+         gwx_wallet_address: gwx_wallet
       }
     }
 
@@ -327,10 +330,11 @@ class Sandbox
     gwx_wallet = "#{Faker::Blockchain::Bitcoin.address.upcase}"
     payload = {
       body: {
-                   user_id: 101,
-                  quantity: 0.01000000,
-          transaction_type: "btc",
-        gwx_wallet_address: gwx_wallet
+                    user_id: 101,
+        quantity_to_receive: 0.01000000,
+            gwx_to_transfer: 40.0,
+           transaction_type: "btc",
+         gwx_wallet_address: gwx_wallet
       }
     }
 
@@ -350,8 +354,9 @@ class Sandbox
     gwx_wallet = "#{Faker::Blockchain::Bitcoin.address.upcase}"
     payload = {
       body: {
-                   user_id: 101,
-                  quantity: 0.12345678,
+                    user_id: 101,
+        quantity_to_receive: 0.12345678,
+            gwx_to_transfer: 50.0,
           transaction_type: "btc",
         gwx_wallet_address: gwx_wallet
       }

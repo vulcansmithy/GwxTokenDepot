@@ -2,14 +2,15 @@ require "rails_helper"
 
 describe Api::V1::TopUpTransactionsController do
 
-  it "should do something" do
+  it "should be able to successfully cal POST /top_up_transactions" do
     
     # setup params payload 1
     payload = {
-                 user_id: 433,
-                quantity: 500.000000,
-        transaction_type: "btc",
-      gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ1"
+                  user_id: 433,
+      quantity_to_receive: 20999999.9769,
+          gwx_to_transfer: 10.00000000,
+         transaction_type: "btc",
+       gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ1"
     }
     
     # call the API endpoint
@@ -20,10 +21,11 @@ describe Api::V1::TopUpTransactionsController do
 
     # setup params payload 2
     payload = {
-                 user_id: 586,
-                quantity: 1.000000,
-        transaction_type: "btc",
-      gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ2"
+                  user_id: 586,
+      quantity_to_receive: 1.000000,
+          gwx_to_transfer: 20.00,
+         transaction_type: "btc",
+       gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ2"
     }
     
     # call the API endpoint
@@ -34,10 +36,11 @@ describe Api::V1::TopUpTransactionsController do
 
     # setup params payload 3
     payload = {
-                 user_id: 983,
-                quantity: 2.000000,
-        transaction_type: "xem",
-      gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ3"
+                  user_id: 983,
+      quantity_to_receive: 2.000000,
+          gwx_to_transfer: 30.00,
+         transaction_type: "xem",
+       gwx_wallet_address: "TCP33TIK2FSSFWXUIBHWXNUZDGISPTCZE5YSSTJ3"
     }
     
     # call the API endpoint

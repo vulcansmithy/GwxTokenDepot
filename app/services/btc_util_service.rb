@@ -34,9 +34,8 @@ class BtcUtilService < BaseUtilService
       child_node = parent_node.node_for_path(bip32_address_path)
 
       # save the receiving wallet_address
-      transaction.top_up_receiving_wallet_address = 
-        if Rails.env.production? 
-          child_node.to_address 
+      transaction.top_up_receiving_wallet_address = if Rails.env.production? 
+         child_node.to_address 
         else
           child_node.to_address(network: :bitcoin_testnet)
         end  

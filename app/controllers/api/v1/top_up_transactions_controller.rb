@@ -35,7 +35,8 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
 
   def top_up_transactions_params
     params.permit(:user_id,    
-      :quantity, 
+      :quantity_to_receive, 
+      :gwx_to_transfer,
       :transaction_type,
       :gwx_wallet_address)
   end

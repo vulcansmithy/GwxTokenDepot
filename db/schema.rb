@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_06_28_075129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "bip32_address_path"
-    t.decimal "quantity_to_receive", precision: 10, scale: 8
+    t.decimal "quantity_to_receive", precision: 16, scale: 8
     t.decimal "gwx_to_transfer", precision: 8, scale: 6
   end
 

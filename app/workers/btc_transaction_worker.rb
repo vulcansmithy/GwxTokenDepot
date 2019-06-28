@@ -26,7 +26,7 @@ class BtcTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         BtcTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, btc_transaction.id)
 
-      elsif current_balance >= btc_transaction.quantity
+      elsif current_balance >= btc_transaction.quantity_to_receive
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
