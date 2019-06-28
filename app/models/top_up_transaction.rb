@@ -5,7 +5,8 @@ class TopUpTransaction < ApplicationRecord
   class TopUpTransactionError < StandardError; end
   
   TRANSACTION_TYPES  = [:btc, :eth, :xem].freeze
-  SCHEDULED_INTERVAL = Rails.env.production? ? 15.minutes : 30.seconds
+    INITIAL_INTERVAL = Rails.env.production? ?  2.minutes : 15.seconds
+  SCHEDULED_INTERVAL = Rails.env.production? ? 20.minutes : 30.seconds
   RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 20.minutes
   
   enum transaction_type: TRANSACTION_TYPES
@@ -103,7 +104,7 @@ class TopUpTransaction < ApplicationRecord
     begin  
 
       worker_object = "#{transaction.transaction_type.titlecase}TransactionWorker".constantize.new
-      worker_object.class.perform_at(SCHEDULED_INTERVAL, transaction.id)
+      worker_object.class.perform_at(INITIAL_INTERVAL, transaction.id)
 
     rescue NameError => e
       raise TopUpTransactionError, e.message
