@@ -11,10 +11,11 @@ class TopUpTransaction < ApplicationRecord
   
   enum transaction_type: TRANSACTION_TYPES
   
-  validates_presence_of :user_id,            :on => :create, :message => "can't be blank"
-  validates_presence_of :quantity,           :on => :create, :message => "can't be blank"
-  validates_presence_of :transaction_type,   :on => :create, :message => "can't be blank"
-  validates_presence_of :gwx_wallet_address, :on => :create, :message => "can't be blank"
+  validates_presence_of :user_id,             :on => :create, :message => "can't be blank"
+  validates_presence_of :quantity_to_receive, :on => :create, :message => "can't be blank"
+  validates_presence_of :gwx_to_transfer,     :on => :create, :message => "can't be blank"
+  validates_presence_of :transaction_type,    :on => :create, :message => "can't be blank"
+  validates_presence_of :gwx_wallet_address,  :on => :create, :message => "can't be blank"
   
   validates :transaction_type, inclusion: { in: TRANSACTION_TYPES.map {|t| t.to_s } }
   
