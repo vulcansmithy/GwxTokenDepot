@@ -80,6 +80,17 @@ class TopUpTransaction < ApplicationRecord
     
     event :transfer_gwx_to_gwx_wallet do
       transitions from: :transaction_successful, to: :gwx_transferred
+      
+      before do
+        # @TODO call transfer
+      end
+      
+      after do
+        puts "@DEBUG L:#{__LINE__}   Transfer complete!"
+        
+        # save the updated state
+        self.save
+      end
     end
   end
 

@@ -33,6 +33,9 @@ class BtcTransactionWorker
         puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction_id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         btc_transaction.confirm_transaction_successful
+        
+        # transfer the gwx to the gwx_wallet_address
+        btc_transaction.transfer_gwx_to_gwx_wallet
       else
         
         puts "@DEBUG L:#{__LINE__}   ***************************"
