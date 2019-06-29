@@ -31,6 +31,18 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
     end
   end
   
+  def convert_btc_to_gwx
+    begin
+      btc_value = Float(params[:btc_value])
+    rescue ArgumentError => e
+      error_response("Invalid passed btc value.", e.message, :bad_request)
+    else
+      # @TODO
+      error_response("", "To be implemented", :bad_request)  
+    end
+        
+  end
+  
   private
 
   def top_up_transactions_params
