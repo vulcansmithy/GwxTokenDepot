@@ -380,4 +380,9 @@ class Sandbox
     btc_in_usd = btc_value * btc_to_usd_conversation_rate
     gwx_value  = btc_in_usd / 0.003
   end
+  
+  def wb17
+    response = HTTParty.get("http://localhost:3000/top_up_transactions/calculate/btc/2/to_gwx")
+    
+  end
 end

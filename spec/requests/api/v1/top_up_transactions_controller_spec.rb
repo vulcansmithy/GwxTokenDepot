@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Api::V1::TopUpTransactionsController do
 
-  it "should be able to successfully cal POST /top_up_transactions" do
+  xit "should be able to successfully call POST /top_up_transactions" do
     
     # setup params payload 1
     payload = {
@@ -48,8 +48,26 @@ describe Api::V1::TopUpTransactionsController do
     
     # make sure the response status was 201 or :created
     expect(response.status).to eq 201  
-
-
-    puts "@DEBUG L:#{__LINE__}   #{ap TopUpTransaction.all}"
   end
+
+  it "should be able to successfully call GET /top_up_transactions/calculate/btc/{btc_value}/to_gwx" do
+    
+    # call the API endpoint
+    get "/top_up_transactions/calculate/btc/1.0/to_gwx"
+    
+    # make sure the response status was 200 or :ok
+    expect(response.status).to eq 200
+    
+    # call the API endpoint
+    get "/top_up_transactions/calculate/btc/0.5/to_gwx"
+    
+    # make sure the response status was 200 or :ok
+    expect(response.status).to eq 200
+    
+    result = JSON.parse(response.body)
+    
+    # make sure the gwx has a value
+    expect(result["gwx"].nil?).to eq false
+  end
+
 end

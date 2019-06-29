@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     # setup the API endpoints for the TopUpTransactions
     resources :top_up_transactions, :only => [:index, :show, :create] do
       collection do
-        get "/calculate/btc/:btc_value/to_gwx", to: "top_up_transactions#convert_btc_to_gwx"
-        get "/calculate/eth/:btc_value/to_gwx", to: "top_up_transactions#convert_eth_to_gwx"
-        get "/calculate/xem/:btc_value/to_gwx", to: "top_up_transactions#convert_xem_to_gwx"
+        get "/calculate/btc/:btc_value/to_gwx", to: "top_up_transactions#convert_btc_to_gwx", btc_value: /.*/
+        get "/calculate/eth/:btc_value/to_gwx", to: "top_up_transactions#convert_eth_to_gwx", eth_value: /.*/
+        get "/calculate/xem/:btc_value/to_gwx", to: "top_up_transactions#convert_xem_to_gwx", xem_value: /.*/
       end
     end
   
