@@ -2,7 +2,7 @@ class CreateTopUpTransactions < ActiveRecord::Migration[5.2]
   def change
     create_table   :top_up_transactions do |t|
       t.integer    :user_id
-      t.decimal    :quantity,  precision: 10, scale: 6
+      t.decimal    :quantity, precision: 10, scale: 8
       t.integer    :transaction_type, :null => true
       t.string     :top_up_receiving_wallet_address
       t.string     :top_up_transaction_hash

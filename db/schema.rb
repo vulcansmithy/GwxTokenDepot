@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_24_064931) do
+ActiveRecord::Schema.define(version: 2019_06_28_075129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "top_up_transactions", force: :cascade do |t|
     t.integer "user_id"
-    t.decimal "quantity", precision: 10, scale: 6
     t.integer "transaction_type"
     t.string "top_up_receiving_wallet_address"
     t.string "top_up_transaction_hash"
@@ -29,6 +28,8 @@ ActiveRecord::Schema.define(version: 2019_06_24_064931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "bip32_address_path"
+    t.decimal "quantity_to_receive", precision: 16, scale: 8
+    t.decimal "gwx_to_transfer", precision: 8, scale: 6
   end
 
 end

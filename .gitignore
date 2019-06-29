@@ -28,3 +28,6 @@
 
 # Ignore .rvmrc file
 .rvmrc
+
+# Ignore redis dump file
+dump.rdb

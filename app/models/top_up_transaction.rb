@@ -4,14 +4,18 @@ class TopUpTransaction < ApplicationRecord
 
   class TopUpTransactionError < StandardError; end
   
-  TRANSACTION_TYPES = [:btc, :eth, :xem]
+  TRANSACTION_TYPES  = [:btc, :eth, :xem].freeze
+    INITIAL_INTERVAL = Rails.env.production? ?  2.minutes : 15.seconds
+  SCHEDULED_INTERVAL = Rails.env.production? ? 20.minutes : 30.seconds
+  RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 20.minutes
   
   enum transaction_type: TRANSACTION_TYPES
   
-  validates_presence_of :user_id,            :on => :create, :message => "can't be blank"
-  validates_presence_of :quantity,           :on => :create, :message => "can't be blank"
-  validates_presence_of :transaction_type,   :on => :create, :message => "can't be blank"
-  validates_presence_of :gwx_wallet_address, :on => :create, :message => "can't be blank"
+  validates_presence_of :user_id,             :on => :create, :message => "can't be blank"
+  validates_presence_of :quantity_to_receive, :on => :create, :message => "can't be blank"
+  validates_presence_of :gwx_to_transfer,     :on => :create, :message => "can't be blank"
+  validates_presence_of :transaction_type,    :on => :create, :message => "can't be blank"
+  validates_presence_of :gwx_wallet_address,  :on => :create, :message => "can't be blank"
   
   validates :transaction_type, inclusion: { in: TRANSACTION_TYPES.map {|t| t.to_s } }
   
@@ -29,11 +33,13 @@ class TopUpTransaction < ApplicationRecord
       
       before do
         begin  
-          coin_service = "#{self.transaction_type.titlecase}UtilService".constantize.new
+          coin_util_service = "#{self.transaction_type.titlecase}UtilService".constantize.new
         rescue NameError => e
-          raise TopUpTransactionError, "There was no corresponding UtilService for specified transaction type '#{transaction_type}'."
+          raise TopUpTransactionError, e.message
+        rescue Exception => e   
+          raise TopUpTransactionError, e.message
         else 
-          coin_service.assign_receiving_wallet(self)
+          coin_util_service.assign_receiving_wallet(self)
         end  
       end
       
@@ -41,26 +47,50 @@ class TopUpTransaction < ApplicationRecord
       end
     end  
     
-    event :check_for_incoming_tranfer do
+    event :start_listening_for_incoming_transfer do
       transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
-      
+
       before do
+        schedule_the_appropriate_job(self)
       end
       
       after do
+        # save the updated state
+        self.save
       end
     end
     
     event :confirm_transaction_successful do
       transitions from: :pending, to: :transaction_successful
+      
+      after do
+        # save the updated state
+        self.save
+      end
     end
     
     event :set_transaction_unssuccesful do
       transitions from: :pending, to: :transaction_unsuccessful
+      
+      after do
+        # save the updated state
+        self.save
+      end
     end  
     
     event :transfer_gwx_to_gwx_wallet do
       transitions from: :transaction_successful, to: :gwx_transferred
+      
+      before do
+        # @TODO call transfer
+      end
+      
+      after do
+        puts "@DEBUG L:#{__LINE__}   Transfer complete!"
+        
+        # save the updated state
+        self.save
+      end
     end
   end
 
@@ -80,6 +110,19 @@ class TopUpTransaction < ApplicationRecord
     end
     
     return result
+  end
+  
+  def schedule_the_appropriate_job(transaction)
+    begin  
+
+      worker_object = "#{transaction.transaction_type.titlecase}TransactionWorker".constantize.new
+      worker_object.class.perform_at(INITIAL_INTERVAL, transaction.id)
+
+    rescue NameError => e
+      raise TopUpTransactionError, e.message
+    rescue Exception => e   
+      raise TopUpTransactionError, e.message
+    end  
   end
   
 end
