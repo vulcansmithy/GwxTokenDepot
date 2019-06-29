@@ -1,7 +1,8 @@
 class BtcUtilService < BaseUtilService
 
-  BLOCKCHAIN_NETWORK        = Rails.env.production? ? "BTC" : "BTCTEST"
-  CHAIN_SO_API_ENDPOINT_URL = "https://chain.so/api/v2/get_address_balance/" 
+  BLOCKCHAIN_NETWORK                   = Rails.env.production? ? "BTC" : "BTCTEST"
+  CHAIN_SO_API_GET_ADDRESS_BALANCE_URL = "https://chain.so/api/v2/get_address_balance/" 
+  CHAIN_SO_API_GET_PRICE_URL           = "https://chain.so/api/v2/get_price"
   
   class BtcUtilServiceError < StandardError; end
 
@@ -54,7 +55,7 @@ class BtcUtilService < BaseUtilService
 
     begin
       # call the API endpoint
-      response = HTTParty.get("#{CHAIN_SO_API_ENDPOINT_URL}#{BLOCKCHAIN_NETWORK}/#{transaction.top_up_receiving_wallet_address}")
+      response = HTTParty.get("#{CHAIN_SO_API_GET_ADDRESS_BALANCE_URL}#{BLOCKCHAIN_NETWORK}/#{transaction.top_up_receiving_wallet_address}")
       
       # make sure the response code is :ok before continuing
       raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
@@ -72,5 +73,25 @@ class BtcUtilService < BaseUtilService
       return BigDecimal(confirmed_balance)
     end  
   end  
+
+  def get_btc_usd_conversion_rate
+    response = HTTParty.get("#{CHAIN_SO_API_GET_PRICE_URL}/BTC/USD")
+    
+    # make sure the response code is :ok before continuing
+    raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
+    
+    # parse the returned data
+    result = JSON.parse(response.body)
+    
+    # get the btc to USD exchange rate
+    exchange_rate = result["data"]["prices"][0]["price"]
+    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'price' value." if exchange_rate.nil?
+    
+    # get the timestamp
+    timestamp = result["data"]["prices"][0]["time"] 
+    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'time' value." if timestamp.nil?
+    
+    return exchange_rate.to_f, Time.at(timestamp).utc
+  end
 
 end

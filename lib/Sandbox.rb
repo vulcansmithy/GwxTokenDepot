@@ -240,7 +240,6 @@ class Sandbox
     # >>> THIS WORKS!!! <<<
     response = HTTParty.get("https://chain.so/api/v2/get_address_balance/BTC/1EbLHdwKndhjYVY9x9WgWBmJy5dJuXPPMi")
   end
-=end
   
   def wb14
     wb14_1
@@ -369,4 +368,9 @@ class Sandbox
     transaction.top_up_receiving_wallet_address = wallet
     raise "transaction.save failed" unless transaction.save
   end
+=end
+  
+  def wb15
+    response = HTTParty.get("https://chain.so/api/v2/get_price/BTC/USD")
+  end  
 end
