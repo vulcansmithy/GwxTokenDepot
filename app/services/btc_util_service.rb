@@ -1,4 +1,6 @@
 class BtcUtilService < BaseUtilService
+  
+  GWX_TO_USD                           = 0.003
 
   BLOCKCHAIN_NETWORK                   = Rails.env.production? ? "BTC" : "BTCTEST"
   CHAIN_SO_API_GET_ADDRESS_BALANCE_URL = "https://chain.so/api/v2/get_address_balance/" 
@@ -92,6 +94,13 @@ class BtcUtilService < BaseUtilService
     raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'time' value." if timestamp.nil?
     
     return exchange_rate.to_f, Time.at(timestamp).utc
+  end
+  
+  def convert_btc_to_gwx(btc_value)
+    
+    btc_to_usd_conversation_rate = (self.get_btc_usd_conversion_rate)[0]
+    
+    return (btc_value * btc_to_usd_conversation_rate) / GWX_TO_USD
   end
 
 end

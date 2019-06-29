@@ -373,4 +373,11 @@ class Sandbox
   def wb15
     response = HTTParty.get("https://chain.so/api/v2/get_price/BTC/USD")
   end  
+  
+  def wb16(btc_value)
+    btc_to_usd_conversation_rate = 11903.10
+    
+    btc_in_usd = btc_value * btc_to_usd_conversation_rate
+    gwx_value  = btc_in_usd / 0.003
+  end
 end
