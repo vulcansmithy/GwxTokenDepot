@@ -11,6 +11,8 @@ class TopUpTransaction < ApplicationRecord
   
   enum transaction_type: TRANSACTION_TYPES
   
+  attr_encrypted :top_up_receiving_wallet_pk, key: Rails.application.secrets.top_up_receiving_wallet_pk
+  
   validates_presence_of :user_id,             :on => :create, :message => "can't be blank"
   validates_presence_of :quantity_to_receive, :on => :create, :message => "can't be blank"
   validates_presence_of :gwx_to_transfer,     :on => :create, :message => "can't be blank"

@@ -46,6 +46,21 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
         
   end
   
+  def convert_xem_to_gwx
+
+    begin
+      xem_value = Float(params[:btc_value])
+    rescue ArgumentError => e
+      error_response("Invalid passed xem value.", e.message, :bad_request)
+    else
+      xem_service = XemUtilService.new
+      gwx_value   = xem_service.convert_xem_to_gwx(btc_value)
+
+      success_response({ xem: xem_value, gwx: gwx_value })
+    end
+        
+  end
+  
   private
 
   def top_up_transactions_params
