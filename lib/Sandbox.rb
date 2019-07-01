@@ -385,4 +385,8 @@ class Sandbox
     response = HTTParty.get("http://localhost:3000/top_up_transactions/calculate/btc/2/to_gwx")
     
   end
+  
+  def wb18
+    result = NemService.create_account
+  end
 end

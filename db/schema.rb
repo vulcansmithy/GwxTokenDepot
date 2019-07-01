@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_28_075129) do
+ActiveRecord::Schema.define(version: 2019_07_01_161918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 2019_06_28_075129) do
     t.string "bip32_address_path"
     t.decimal "quantity_to_receive", precision: 16, scale: 8
     t.decimal "gwx_to_transfer", precision: 8, scale: 6
+    t.string "encrypted_top_up_receiving_wallet_pk"
+    t.string "encrypted_top_up_receiving_wallet_pk_iv"
   end
 
 end
