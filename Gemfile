@@ -67,3 +67,4 @@ gem "fast_jsonapi",             "1.5"      # https://github.com/Netflix/fast_jso
 gem "rswag",                    "2.0.5"    # https://github.com/domaindrivendev/rswag
 gem "sidekiq",                  " 5.2.5"   # https://github.com/mperham/sidekiq
 gem "httparty",                 "0.17.0"   # https://github.com/jnunemaker/httparty
+gem "nem-ruby",                 "0.0.13"   # https://github.com/44uk/nem-ruby
