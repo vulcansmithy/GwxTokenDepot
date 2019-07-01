@@ -19,12 +19,27 @@ class XemUtilService < BaseUtilService
     return result[:xem]
   end
   
-  def get_btc_usd_conversion_rate
-    # @TODO
+  def get_xem_usd_conversion_rate
+    response = HTTParty.get("https://api.coincap.io/v2/assets?ids=nem,bitcoin,ethereum")
+    
+    # make sure the response code is :ok before continuing
+    raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
+    
+    # parse the returned data
+    result = JSON.parse(response.body)
+    
+    # get the btc to USD exchange rate
+     = result["data"][2]["priceUsd"]
+    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
+
+    return exchange_rate
   end
   
-  def convert_btc_to_gwx((btc_value))
-    # @TODO
-  end  
+  def convert_xem_to_gwx(xem_value)
+    
+    xem_to_usd_conversation_rate = self.get_xem_usd_conversion_rate
+    
+    return (xem_value * xem_to_usd_conversation_rate) / GWX_TO_USD
+  end
   
 end
