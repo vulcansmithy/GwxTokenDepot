@@ -13,7 +13,7 @@ class XemUtilService < BaseUtilService
     return transaction
   end  
   
-  def check_btc_wallet_balance(transaction)
+  def check_xem_wallet_balance(transaction)
     result = NemService.check_balance(transaction.top_up_receiving_wallet_address)
     
     return result[:xem]
