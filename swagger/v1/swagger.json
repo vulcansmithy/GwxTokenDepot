@@ -5,5 +5,193 @@
     "version": "v1"
   },
   "paths": {
+    "/v1/top_up_transactions": {
+      "get": {
+        "summary": "Retrieve all Top Up Transactions for a particular User",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Retrieve all Top Up Transactions for a particular User.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "description": "the id of the user",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return All Top Up Transaction(s) for a particular user."
+          },
+          "400": {
+            "description": "Missing 'user_id' parameter."
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Top Up Transaction",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Create a new Top Up Transaction.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "top_up_transaction",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                },
+                "quantity_to_receive": {
+                  "type": "number"
+                },
+                "gwx_to_transfer": {
+                  "type": "string"
+                },
+                "transaction_type": {
+                  "type": "string"
+                },
+                "gwx_wallet_address": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user_id",
+                "quantity_to_receive",
+                "gwx_to_transfer",
+                "transaction_type",
+                "gwx_wallet_address"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New Top Up Transaction successfully created."
+          },
+          "422": {
+            "description": "Transaction failed."
+          }
+        }
+      }
+    },
+    "/v1/top_up_transactions/{:id}": {
+      "get": {
+        "summary": "Retreive a particular TopUpTransaction",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Retreive a particular TopUpTransaction.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the TopUpTransaction 'id'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a specific TopUpTransaction.",
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "230",
+                  "type": "top_up_transaction",
+                  "attributes": {
+                    "user_id": "417",
+                    "quantity_to_receive": "500.0",
+                    "transaction_type": "btc",
+                    "top_up_transaction_hash": "nil",
+                    "top_up_transaction_at": "nil",
+                    "gwx_transaction_hash": "nil",
+                    "gwx_transaction_at": "nil",
+                    "status": "pending"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/top_up_transactions/calculate/btc/{:btc_value}/to_gwx": {
+      "get": {
+        "summary": "Calculate the gwx from the btc value",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Calculate the gwx from the btc value.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "btc_value",
+            "in": "path",
+            "description": "the btc value to be converted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a the calculated gwx from the btc value.",
+            "examples": {
+              "application/json": {
+                "btc": 1.5,
+                "gwx": 5131068.1825
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/top_up_transactions/calculate/xem/{:xem_value}/to_gwx": {
+      "get": {
+        "summary": "Calculate the xem from the btc value",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Calculate the xem from the btc value.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "xem_value",
+            "in": "path",
+            "description": "the xem value to be converted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a the calculated xem from the btc value.",
+            "examples": {
+              "application/json": {
+                "xem": 1.5,
+                "gwx": 44.58296715233445
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
