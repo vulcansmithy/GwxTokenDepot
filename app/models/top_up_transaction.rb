@@ -92,6 +92,19 @@ class TopUpTransaction < ApplicationRecord
         
         # save the updated state
         self.save
+        
+        # instantiate gwx cashier
+        gwx_cashier = GwxCashierLib.new
+        
+        # transfer x amount of gwx tokens to the provided gwx_wallet
+        result = cashier.xem_transfer(
+          Rails.application.secrets.gwx_distribution_wallet,
+          Rails.application.secrets.gwx_distribution_wallet_pk,
+          self.gwx_wallet_address,
+          self.gwx_to_transfer
+        )
+        
+        raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result[:status] == "success"
       end
     end
   end
