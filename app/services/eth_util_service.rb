@@ -1,5 +1,7 @@
 class EthUtilService < BaseUtilService
   
+  BLOCKCYPHER_API_GET_BALANCE_URL = "https://api.blockcypher.com/v1/eth/main/addrs/"
+  
   class EthUtilServiceError < StandardError; end
 
   def assign_receiving_wallet(transaction)
@@ -44,7 +46,7 @@ class EthUtilService < BaseUtilService
 
     begin
       # call the API endpoint
-      response = HTTParty.get("https://api.blockcypher.com/v1/eth/main/addrs/#{transaction.top_up_receiving_wallet_address}/balance")
+      response = HTTParty.get("#{BLOCKCYPHER_API_GET_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}/balance")
       
       # make sure the response code is :ok before continuing
       raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
