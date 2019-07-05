@@ -29,7 +29,7 @@ class XemUtilService < BaseUtilService
     result = JSON.parse(response.body)
     
     # get the btc to USD exchange rate
-     = result["data"][2]["priceUsd"]
+    exchange_rate = result["data"][2]["priceUsd"]
     raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
 
     return exchange_rate

@@ -390,7 +390,40 @@ class Sandbox
   end
 =end
   
-  def web19
+  def wb19
+=begin    
+    seed = "895f9fe6ea00db7f97ff181e21b4303c0246e8342c3775b935ed41e7841e4234aa0331866f1931a8b5d56d7f49f6323ffb91aaaccc9522b2dbfb14aaf6960f73"
+    first_wallet = Bip44::Wallet.from_seed(seed, "m/44'/60'/0'/0")
+    xpub = first_wallet.xpub
+    puts first_wallet.to_s
+
+    wallet = Bip44::Wallet.from_xpub(xpub)
+    first_sub_wallet = wallet.sub_wallet("M/0").ethereum_address
+    puts first_sub_wallet
     
+    
+    second_sub_wallet = wallet.sub_wallet("M/1").ethereum_address
+    puts second_sub_wallet
+    
+    return first_sub_wallet
+=end
+    seed = "895f9fe6ea00db7f97ff181e21b4303c0246e8342c3775b935ed41e7841e4234aa0331866f1931a8b5d56d7f49f6323ffb91aaaccc9522b2dbfb14aaf6960f73"
+    first_wallet = Bip44::Wallet.from_seed(seed, "m/44'/60'/0'/0")
+    xpub = first_wallet.xpub  
+    puts first_wallet.ethereum_address
+    
+    wallet = Bip44::Wallet.from_xpub(xpub)
+    first_sub_wallet = wallet.sub_wallet("M/0").ethereum_address
+    puts first_sub_wallet
+    
+    test_wallet = Bip44::Wallet.from_seed(seed, "m/44'/60'/0'/0/0")
+    puts test_wallet.ethereum_address
+  end
+  
+  def wb20
+    seed = "895f9fe6ea00db7f97ff181e21b4303c0246e8342c3775b935ed41e7841e4234aa0331866f1931a8b5d56d7f49f6323ffb91aaaccc9522b2dbfb14aaf6960f73"
+    seed = "881daf48e6c5e0e510a3c4df70fa1a0105f696efa6172871477276c094337f2c93c076aa2e1dbf8cf39738edc96cc4c2faa1078aabdda734aca8d887a5e085de"
+    seed = "d53a7e963aa86cf397e7ac142c06b2fe5c47302eb53702b901505ef1aa718addb9b846807e4eb84e244cc50ffc55660270afa36cebfb85f55da10c960871b67d"
+    seed = "6868500ec4c76819b08e39f4c485234245bba8b90af92900b4f4b4ed5c7ced61418ba16e6014d0864e52db2fdc86c6bb50df300979064a5bcd19741d1232fd19"
   end
 end
