@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+When generating a new Web Services API endpoint controller
 
-Things you may want to cover:
+~~~
+$ rails generate versionist:new_controller publishers Api::V1
+~~~
 
-* Ruby version
+To generate/update the Swagger JSON file(s) thru [rswag](https://github.com/domaindrivendev/rswag)
 
-* System dependencies
+~~~
+$ rake rswag:specs:swaggerize
+~~~
 
-* Configuration
+then run the rails server and load the API doc at 
 
-* Database creation
+~~~
+http://localhost:3000/api-docs
+~~~
 
-* Database initialization
+Run redis server 
+~~~
+$ redis-server
+~~~
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Run sidekiq
+~~~
+$ bundle exec sidekiq
+~~~
