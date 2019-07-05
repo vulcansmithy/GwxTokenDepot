@@ -1,6 +1,9 @@
 class EthUtilService < BaseUtilService
   
+  GWX_TO_USD                      = 0.003
+  
   BLOCKCYPHER_API_GET_BALANCE_URL = "https://api.blockcypher.com/v1/eth/main/addrs/"
+  COINCAPI_API_GET_USD_VALUE_URL  = "https://api.coincap.io/v2/assets?ids=ethereum""
   
   class EthUtilServiceError < StandardError; end
 
@@ -42,7 +45,7 @@ class EthUtilService < BaseUtilService
     return transaction
   end   
   
-  def check_btc_wallet_balance(transaction)
+  def check_eth_wallet_balance(transaction)
 
     begin
       # call the API endpoint
@@ -65,4 +68,27 @@ class EthUtilService < BaseUtilService
     end  
   end 
   
+  def get_eth_usd_conversion_rate
+    response = HTTParty.get(COINCAPI_API_GET_USD_VALUE_URL)
+    
+    # make sure the response code is :ok before continuing
+    raise EthUtilService, "Can't reach API endpoint." unless response.code == 200
+    
+    # parse the returned data
+    result = JSON.parse(response.body)
+    
+    # get the eth to USD exchange rate
+    exchange_rate = result["data"][0]["priceUsd"]
+    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
+
+    return exchange_rate
+  end
+  
+  def convert_eth_to_gwx(eth_value)
+    
+    eth_to_usd_conversation_rate = (self.get_eth_usd_conversion_rate)[0]
+    
+    return (eth_value * eth_to_usd_conversation_rate) / GWX_TO_USD
+  end
+
 end

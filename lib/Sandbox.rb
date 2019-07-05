@@ -426,4 +426,18 @@ class Sandbox
     seed = "d53a7e963aa86cf397e7ac142c06b2fe5c47302eb53702b901505ef1aa718addb9b846807e4eb84e244cc50ffc55660270afa36cebfb85f55da10c960871b67d"
     seed = "6868500ec4c76819b08e39f4c485234245bba8b90af92900b4f4b4ed5c7ced61418ba16e6014d0864e52db2fdc86c6bb50df300979064a5bcd19741d1232fd19"
   end
+  
+  def wb21
+    response = HTTParty.get("https://api.coincap.io/v2/assets?ids=ethereum")
+    
+    # make sure the response code is :ok before continuing
+    raise "Can't reach API endpoint." unless response.code == 200
+    
+    # parse the returned data
+    result = JSON.parse(response.body)
+    
+    # get the btc to USD exchange rate
+    #exchange_rate = result["data"][2]["priceUsd"]
+    return result
+  end  
 end
