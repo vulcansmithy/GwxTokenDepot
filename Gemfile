@@ -45,6 +45,14 @@ group :development, :test do
   gem "faker",                  "1.9.4"    # https://github.com/stympy/faker
   gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
   gem "timecop",                "0.9.1"    # https://github.com/travisjeffery/timecop 
+  
+  # enable Capistrano
+  gem "capistrano",               require: false
+  gem "capistrano-rbenv",         require: false
+  gem "capistrano-rbenv-install", require: false
+  gem "capistrano-rails",         require: false
+  gem "capistrano-bundler",       require: false
+  gem "capistrano3-puma",         require: false
 end
 
 group :development do
