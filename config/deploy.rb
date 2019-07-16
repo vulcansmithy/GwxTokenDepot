@@ -7,7 +7,7 @@ set :rbenv_roles, :all
 
 set :repo_url,        'git@github.com:gameworks-gwx/gwx-token-depot.git'
 set :application,     'gwx-token-depot'
-set :user,            'deployer'
+set :user,            'deploy'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
  
