@@ -14,7 +14,6 @@ install_plugin Capistrano::Puma
 install_plugin Capistrano::Puma::Nginx
 
 require "capistrano/sidekiq"
-require "capistrano/sidekiq/monit" 
 
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
