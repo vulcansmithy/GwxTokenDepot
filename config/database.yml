@@ -13,6 +13,17 @@ test:
   <<: *default
   database: gwx_token_depot_test
 
+Staging:
+  host: gdxhhvirpbjztj.crbvlq8se7oc.ap-southeast-1.rds.amazonaws.com
+  database: gwx_token_depot_staging
+  username: db_user
+  password: JrHLZgul6hej
+  port: 5432
+
 production:
   <<: *default
+  host: gd17czbby0d79ob.crbvlq8se7oc.ap-southeast-1.rds.amazonaws.com
   database: gwx_token_depot_production
+  username: db_user
+  password: tN2yBCJHPmy4
+  port: 5432
