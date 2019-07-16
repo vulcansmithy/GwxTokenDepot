@@ -90,6 +90,9 @@ GEM
     capistrano-rbenv-install (1.2.0)
       capistrano (>= 3.0)
       capistrano-rbenv (>= 2.0)
+    capistrano-sidekiq (1.0.2)
+      capistrano (>= 3.9.0)
+      sidekiq (>= 3.4)
     capistrano3-puma (3.1.1)
       capistrano (~> 3.7)
       capistrano-bundler
@@ -355,6 +358,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capistrano-rbenv-install
+  capistrano-sidekiq
   capistrano3-puma
   factory_bot_rails (= 4.11.1)
   faker (= 1.9.4)
@@ -381,4 +385,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   2.0.1
+   2.0.2

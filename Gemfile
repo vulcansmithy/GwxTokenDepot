@@ -60,6 +60,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring", "2.1.0"
   gem "spring-watcher-listen", "2.0.1"
+  gem "capistrano-sidekiq"
 end
 
 
@@ -78,4 +79,3 @@ gem "httparty",                 "0.17.0"   # https://github.com/jnunemaker/httpa
 gem "nem-ruby",                 "0.0.13"   # https://github.com/44uk/nem-ruby
 gem "attr_encrypted",           "3.1.0"    # https://github.com/attr-encrypted/attr_encrypted
 gem "bip44",                    "0.2.18"   # https://github.com/wuminzhe/bip44
-
