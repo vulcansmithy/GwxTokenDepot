@@ -39,7 +39,6 @@ group :development, :test do
   # https://github.com/colszowka/simplecov
   gem "simplecov",              "0.16.1", require: false   
 
-  gem "rspec-rails",            "3.8.1"    # https://github.com/rspec/rspec-rails
   gem "guard-rspec",            "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
   gem "faker",                  "1.9.4"    # https://github.com/stympy/faker
@@ -79,3 +78,5 @@ gem "httparty",                 "0.17.0"   # https://github.com/jnunemaker/httpa
 gem "nem-ruby",                 "0.0.13"   # https://github.com/44uk/nem-ruby
 gem "attr_encrypted",           "3.1.0"    # https://github.com/attr-encrypted/attr_encrypted
 gem "bip44",                    "0.2.18"   # https://github.com/wuminzhe/bip44
+
+gem "rspec-rails",              "3.8.1"    # https://github.com/rspec/rspec-rails
