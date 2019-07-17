@@ -31,3 +31,6 @@
 
 # Ignore redis dump file
 dump.rdb
+
+# Ignore sandbox.rb
+/lib/sandbox.rb
