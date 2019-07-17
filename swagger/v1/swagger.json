@@ -161,6 +161,38 @@
         }
       }
     },
+    "/v1/top_up_transactions/calculate/eth/{:eth_value}/to_gwx": {
+      "get": {
+        "summary": "Calculate the gwx from the eth value",
+        "tags": [
+          "Top Up Transaction"
+        ],
+        "description": "Calculate the gwx from the eth value.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "eth_value",
+            "in": "path",
+            "description": "the eth value to be converted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a the calculated gwx from the eth value.",
+            "examples": {
+              "application/json": {
+                "eth": 1.5,
+                "gwx": 5131068.1825
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/top_up_transactions/calculate/xem/{:xem_value}/to_gwx": {
       "get": {
         "summary": "Calculate the xem from the btc value",

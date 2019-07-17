@@ -97,6 +97,25 @@ describe "Gameworks Token Depot API" do
       end  
     end
   end
+  
+  path "/v1/top_up_transactions/calculate/eth/{:eth_value}/to_gwx" do
+    get "Calculate the gwx from the eth value" do
+      tags "Top Up Transaction"
+      description "Calculate the gwx from the eth value."
+      produces "application/json" 
+      parameter name: :eth_value, in: :path, description: "the eth value to be converted", required: true, type: :string
+      
+      response "200", "Return a the calculated gwx from the eth value." do
+        
+        examples "application/json" => { 
+          "eth": 1.5, 
+          "gwx": 5131068.1825 
+        }
+        
+        run_test!
+      end  
+    end
+  end
 
   path "/v1/top_up_transactions/calculate/xem/{:xem_value}/to_gwx" do
     get "Calculate the xem from the btc value" do
@@ -117,5 +136,5 @@ describe "Gameworks Token Depot API" do
     end
   end
 =end
-  
+    
 end
