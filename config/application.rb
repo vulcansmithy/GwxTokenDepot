@@ -37,5 +37,14 @@ module GwxTokenDepotApi
     
     config.eager_load_paths << Rails.root.join("lib")
     config.autoload_paths   << Rails.root.join("lib")
+    
+=begin    
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+         origins  "*"
+         resource "*", :headers => :any, :methods => [:get, :post]
+       end
+    end
+=end
   end
 end
