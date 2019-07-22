@@ -32,7 +32,7 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
   end
   
   def convert_btc_to_gwx
-puts "@DEBUG L:#{__LINE__}   *** MARKED ***"
+puts "@DEBUG L:#{__LINE__}   *** MARKED 11:41:28am ***"
     begin
       btc_value = Float(params[:btc_value])
     rescue ArgumentError => e
