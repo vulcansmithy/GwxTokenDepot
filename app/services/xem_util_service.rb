@@ -36,8 +36,10 @@ class XemUtilService < BaseUtilService
   end
   
   def convert_xem_to_gwx(xem_value)
-    
+puts "@DEBUG L:#{__LINE__}   xem_value=#{xem_value}"
+puts "@DEBUG L:#{__LINE__}   xem_value.class=#{xem_value.class}"    
     xem_to_usd_conversation_rate = self.get_xem_usd_conversion_rate
+puts "@DEBUG L:#{__LINE__}   xem_to_usd_conversation_rate=#{xem_to_usd_conversation_rate}"
     
     return (xem_value * xem_to_usd_conversation_rate) / GWX_TO_USD
   end
