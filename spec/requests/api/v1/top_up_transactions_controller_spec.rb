@@ -70,4 +70,15 @@ describe Api::V1::TopUpTransactionsController do
     expect(result["gwx"].nil?).to eq false
   end
 
+  it "should be able to successfully call GET /top_up_transactions/calculate/xem/{xem_value}/to_gwx" do
+    
+    # call the API endpoint
+    get "/top_up_transactions/calculate/xem/10/to_gwx"
+    
+    # make sure the response status was 200 or :ok
+    expect(response.status).to eq 200
+    
+    result = JSON.parse(response.body)
+  end
+
 end

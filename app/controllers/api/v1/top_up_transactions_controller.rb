@@ -10,7 +10,6 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
   end
   
   def create
-puts "@DEBUG L:#{__LINE__}   *** MARKED 11:45:35am ***"    
     new_top_up_transaction = TopUpTransaction.new(top_up_transactions_params)
     if new_top_up_transaction.save
       
@@ -47,18 +46,13 @@ puts "@DEBUG L:#{__LINE__}   *** MARKED 11:45:35am ***"
   end
   
   def convert_xem_to_gwx
-puts "@DEBUG L:#{__LINE__}   12:21:09PM"
     begin
       xem_value = Float(params[:xem_value])
     rescue ArgumentError => e
-puts "@DEBUG L:#{__LINE__}   MARKED"
       error_response("Invalid passed xem value.", e.message, :bad_request)
     else
-puts "@DEBUG L:#{__LINE__}   MARKED"      
       xem_service = XemUtilService.new
-puts "@DEBUG L:#{__LINE__}   MARKED" 
       gwx_value   = xem_service.convert_xem_to_gwx(xem_value)
-puts "@DEBUG L:#{__LINE__}   MARKED" 
 
       success_response({ xem: xem_value, gwx: gwx_value })
     end

@@ -78,7 +78,7 @@ class EthUtilService < BaseUtilService
     result = JSON.parse(response.body)
     
     # get the eth to USD exchange rate
-    exchange_rate = result["data"][0]["priceUsd"]
+    exchange_rate = (result["data"][0]["priceUsd"]).to_f
     raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
 
     return exchange_rate
