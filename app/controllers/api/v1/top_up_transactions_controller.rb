@@ -56,7 +56,7 @@ puts "@DEBUG L:#{__LINE__}   MARKED"
     else
 puts "@DEBUG L:#{__LINE__}   MARKED"      
       xem_service = XemUtilService.new
-      gwx_value   = xem_service.convert_xem_to_gwx(btc_value)
+      gwx_value   = xem_service.convert_xem_to_gwx(xem_value)
 
       success_response({ xem: xem_value, gwx: gwx_value })
     end
