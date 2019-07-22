@@ -33,7 +33,6 @@ puts "@DEBUG L:#{__LINE__}   *** MARKED 11:45:35am ***"
   end
   
   def convert_btc_to_gwx
-puts "@DEBUG L:#{__LINE__}   *** MARKED 11:41:28am ***"
     begin
       btc_value = Float(params[:btc_value])
     rescue ArgumentError => e
@@ -48,12 +47,14 @@ puts "@DEBUG L:#{__LINE__}   *** MARKED 11:41:28am ***"
   end
   
   def convert_xem_to_gwx
-
+puts "@DEBUG L:#{__LINE__}   12:12:26PM"
     begin
       xem_value = Float(params[:xem_value])
     rescue ArgumentError => e
+puts "@DEBUG L:#{__LINE__}   MARKED"
       error_response("Invalid passed xem value.", e.message, :bad_request)
     else
+puts "@DEBUG L:#{__LINE__}   MARKED"      
       xem_service = XemUtilService.new
       gwx_value   = xem_service.convert_xem_to_gwx(btc_value)
 
