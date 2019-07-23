@@ -120,7 +120,7 @@ class TopUpTransaction < ApplicationRecord
       self.aasm_state
     when TopUpTransaction::STATE_TRANSACTION_UNSUCCESSFUL
       self.aasm_state
-    default
+    else
       :unrecognized_status
     end
     
