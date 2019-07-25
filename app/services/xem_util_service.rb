@@ -12,7 +12,8 @@ puts "@DEBUG L:#{__LINE__}   account[:priv_key]=#{account[:priv_key ]}"
     transaction.top_up_receiving_wallet_address = account[:address ]
     transaction.top_up_receiving_wallet_pk      = account[:priv_key]
     
-    transaction.save 
+    r=transaction.save 
+puts "@DEBUG L:#{__LINE__}   saved? #{r}"
     
     return transaction
   end  
