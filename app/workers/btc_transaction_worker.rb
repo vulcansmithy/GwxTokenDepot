@@ -18,6 +18,9 @@ class BtcTransactionWorker
       # retrieve current_balance
       current_balance = btc_service.check_btc_wallet_balance(btc_transaction)
       
+      # convert the quantity_to_receive into a BigDecimal
+      expected_to_receive = BigDecimal(btc_transaction.quantity_to_receive)
+      
       if current_balance == 0
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
@@ -26,7 +29,7 @@ class BtcTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         BtcTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, btc_transaction.id)
 
-      elsif current_balance >= btc_transaction.quantity_to_receive
+      elsif current_balance >= expected_to_receive
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "

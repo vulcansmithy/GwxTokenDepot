@@ -18,6 +18,9 @@ class XemTransactionWorker
       # retrieve current_balance
       current_balance = xem_service.check_xem_wallet_balance(xem_transaction)
       
+      # convert the quantity_to_receive into a BigDecimal
+      expected_to_receive = BigDecimal(btc_transaction.quantity_to_receive)
+      
       if current_balance == 0
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
@@ -26,7 +29,7 @@ class XemTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         XemTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, xem_transaction.id)
 
-      elsif current_balance >= xem_transaction.quantity_to_receive
+      elsif current_balance >= expected_to_receive
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
