@@ -12,6 +12,7 @@ puts "@DEBUG L:#{__LINE__}   account[:priv_key]=#{account[:priv_key ]}"
 puts "@DEBUG L:#{__LINE__}   MARKED"
     transaction.top_up_receiving_wallet_address = account[:address ]
 puts "@DEBUG L:#{__LINE__}   MARKED"
+puts "@DEBUG L:#{__LINE__}   #{ap TopUpTransaction}"
     transaction.top_up_receiving_wallet_pk      = account[:priv_key]
 puts "@DEBUG L:#{__LINE__}   MARKED"
 
