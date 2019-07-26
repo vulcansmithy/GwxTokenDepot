@@ -42,7 +42,7 @@ group :development, :test do
   gem "guard-rspec",            "4.7.3"    # https://github.com/guard/guard-rspec
   gem "factory_bot_rails",      "4.11.1"   # https://github.com/thoughtbot/factory_bot_rails
   gem "faker",                  "1.9.4"    # https://github.com/stympy/faker
-  gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
+# gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
   gem "timecop",                "0.9.1"    # https://github.com/travisjeffery/timecop 
   
   # enable Capistrano
@@ -80,3 +80,4 @@ gem "attr_encrypted",           "3.1.0"    # https://github.com/attr-encrypted/a
 gem "bip44",                    "0.2.18"   # https://github.com/wuminzhe/bip44
 
 gem "rspec-rails",              "3.8.1"    # https://github.com/rspec/rspec-rails
+gem "awesome_print",            "1.8.0"    # https://github.com/awesome-print/awesome_print
