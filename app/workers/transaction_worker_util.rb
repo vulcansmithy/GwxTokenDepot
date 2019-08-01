@@ -14,7 +14,7 @@ module TransactionWorkerUtil
       coin_service = "#{transaction_type.titlecase}UtilService".constantize.new
  
       # retrieve current_balance
-      result          = coin_service.send("check_#{transaction_type.lowercase}.wallet_balance", transaction)
+      result          = coin_service.send("check_#{transaction_type.downcase}_wallet_balance", transaction)
       current_balance = BigDecimal(result.to_s)
 
       # convert the quantity_to_receive into a BigDecimal
@@ -24,17 +24,17 @@ module TransactionWorkerUtil
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}      Rescheduling...      "
-        puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction_id}"
+        puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         
         # reschedule the worker
-        ("#{transaction_type.titlecase}TransactionWorker".constantize.new).perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
+        Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
 
       elsif current_balance >= expected_to_receive
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
-        puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction_id}"
+        puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         transaction.confirm_transaction_successful
         
@@ -44,16 +44,16 @@ module TransactionWorkerUtil
         
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}      Rescheduling...      "
-        puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction_id}"
+        puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         
         # reschedule the worker
-        ("#{transaction_type.titlecase}TransactionWorker".constantize.new).perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
+        Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)  
       end    
     else
       puts "@DEBUG L:#{__LINE__}   ***************************"
       puts "@DEBUG L:#{__LINE__}   *  Transaction FAILED!!!   "
-      puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction_id}"
+      puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction.id}"
       puts "@DEBUG L:#{__LINE__}   ***************************"
       transaction.set_transaction_unssuccesful
     end
