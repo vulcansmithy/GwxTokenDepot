@@ -44,7 +44,7 @@ module TransactionWorkerUtil
         transaction.confirm_transaction_successful
         
         transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. This transaction was successful."
-        transaction.save
+        puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
         
         # transfer the gwx to the gwx_wallet_address
         transaction.transfer_gwx_to_gwx_wallet
@@ -56,7 +56,7 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}   ***************************"
         
         transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction is to be rescheduled for checking."
-        transaction.save
+      puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
 
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)  
@@ -68,8 +68,7 @@ module TransactionWorkerUtil
       puts "@DEBUG L:#{__LINE__}   ***************************"
       
       transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction was unsuccessful."
-      transaction.save
-      
+      puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
       
       transaction.set_transaction_unssuccesful
     end
