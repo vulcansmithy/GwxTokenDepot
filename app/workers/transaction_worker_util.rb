@@ -30,7 +30,7 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}   ***************************"
 
         transaction.message = "As of #{Time.now}, the receiving wallet has #{current_balance} balance. This transaction is to be rescheduled for checking."
-        transaction.save
+        puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
         
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
@@ -56,7 +56,7 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}   ***************************"
         
         transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction is to be rescheduled for checking."
-      puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
+        puts "@DEBUG L:#{__LINE__}   transaction.save=#{transaction.save}"
 
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)  

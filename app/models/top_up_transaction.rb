@@ -7,7 +7,7 @@ class TopUpTransaction < ApplicationRecord
   TRANSACTION_TYPES  = [:btc, :eth, :xem].freeze
     INITIAL_INTERVAL = Rails.env.production? ?  2.minutes : 15.seconds
   SCHEDULED_INTERVAL = Rails.env.production? ? 20.minutes : 30.seconds
-  RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 20.minutes
+  RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 6.hours
   
   enum transaction_type: TRANSACTION_TYPES
   
