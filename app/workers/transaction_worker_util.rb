@@ -26,10 +26,13 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}      Rescheduling...      "
         puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
+
+        transaction.message = "As of #{Time.now}, the receiving wallet has #{current_balance} balance. This transaction is to be rescheduled for checking."
+        transaction.save
         
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
-
+        
       elsif current_balance >= expected_to_receive
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
@@ -37,6 +40,9 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         transaction.confirm_transaction_successful
+        
+        transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. This transaction was successful."
+        transaction.save
         
         # transfer the gwx to the gwx_wallet_address
         transaction.transfer_gwx_to_gwx_wallet
@@ -47,6 +53,9 @@ module TransactionWorkerUtil
         puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction.id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
         
+        transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction is to be rescheduled for checking."
+        transaction.save
+
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)  
       end    
@@ -55,6 +64,11 @@ module TransactionWorkerUtil
       puts "@DEBUG L:#{__LINE__}   *  Transaction FAILED!!!   "
       puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction.id}"
       puts "@DEBUG L:#{__LINE__}   ***************************"
+      
+      transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction was unsuccessful."
+      transaction.save
+      
+      
       transaction.set_transaction_unssuccesful
     end
   end
