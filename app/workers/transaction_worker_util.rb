@@ -7,6 +7,8 @@ module TransactionWorkerUtil
       ending_point   = starting_point + TopUpTransaction::RECEIVING_PERIOD
           time_now   = Time.zone.now
     
+    current_balance     = nil 
+    expected_to_receive = nil
     # check if still in the receiving period window
     if (starting_point..ending_point).cover?(time_now)
       
