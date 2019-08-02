@@ -85,7 +85,7 @@ class GwxCashierLib
         mosaic_attachment = Nem::Model::MosaicAttachment.new(
           mosaic_id:  mosaic_definition.id,
           properties: mosaic_definition.properties,
-          quantity:   quantity
+          quantity:   quantity.to_f
         )
         
         # attach mosaic_attachment 

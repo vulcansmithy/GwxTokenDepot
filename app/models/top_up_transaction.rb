@@ -5,7 +5,7 @@ class TopUpTransaction < ApplicationRecord
   class TopUpTransactionError < StandardError; end
   
   TRANSACTION_TYPES  = [:btc, :eth, :xem].freeze
-    INITIAL_INTERVAL = Rails.env.production? ?  2.minutes : 15.seconds
+  INITIAL_INTERVAL = Rails.env.production? ?  2.minutes : 15.seconds
   SCHEDULED_INTERVAL = Rails.env.production? ? 20.minutes : 30.seconds
   RECEIVING_PERIOD   = Rails.env.production? ? 24.hours   : 6.hours
   
@@ -97,10 +97,10 @@ class TopUpTransaction < ApplicationRecord
         gwx_cashier = GwxCashierLib.new
         
         # transfer x amount of gwx tokens to the provided gwx_wallet
-        result = cashier.xem_transfer(
+        result = gwx_cashier.wallet_transfer(
           Rails.application.secrets.gwx_distribution_wallet,
-          Rails.application.secrets.gwx_distribution_wallet_pk,
           self.gwx_wallet_address,
+          Rails.application.secrets.gwx_distribution_wallet_pk,
           self.gwx_to_transfer
         )
         
