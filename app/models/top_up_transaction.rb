@@ -116,7 +116,8 @@ class TopUpTransaction < ApplicationRecord
     when TopUpTransaction::STATE_PAYMENT_RECEIVING_WALLET_ASSIGNED, 
          TopUpTransaction::STATE_PENDING  
       TopUpTransaction::STATE_PENDING
-    when TopUpTransaction::STATE_TRANSACTION_SUCCESSFUL
+    when TopUpTransaction::STATE_TRANSACTION_SUCCESSFUL,
+         TopUpTransaction::STATE_GWX_TRANSFERRED
       self.aasm_state
     when TopUpTransaction::STATE_TRANSACTION_UNSUCCESSFUL
       self.aasm_state
