@@ -1,3 +1,3 @@
-server "54.251.162.83", port: 22, roles: [:web, :app, :db], primary: true
+server "3.1.79.242", port: 22, roles: [:web, :app, :db], primary: true
 set :stage, :staging
 set :branch, :develop
