@@ -3,7 +3,6 @@ class BtcUtilService < BaseUtilService
   GWX_TO_USD                                  = 0.003
 
   BLOCKCHAIN_NETWORK                          = Rails.env.production? ? "btc" : "test3"
-  CHAIN_SO_API_GET_ADDRESS_BALANCE_URL        = "https://chain.so/api/v2/get_address_balance/" 
   BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL = "https://api.blockcypher.com/v1/btc/#{BLOCKCHAIN_NETWORK}/addrs/" 
   COINCAP_API_GET_BTC_TO_USD_PRICE_URL        = "https://api.coincap.io/v2/assets?ids=bitcoin"
   
@@ -59,8 +58,8 @@ class BtcUtilService < BaseUtilService
       result = JSON.parse(response.body)
 
       # retrieve confirmed_balance data
-      confirmed_balance = result["data"]["confirmed_balance"]
-      raise "Was not able to returned JSON data 'confirmed_balance' "if confirmed_balance.nil?
+      confirmed_balance = result["balance"]
+      raise "Was not able to returned JSON data 'balance' "if confirmed_balance.nil?
 
     rescue Exception => e
       raise BtcUtilServiceError, e.message
