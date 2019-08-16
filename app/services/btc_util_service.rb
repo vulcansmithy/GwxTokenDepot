@@ -1,10 +1,11 @@
 class BtcUtilService < BaseUtilService
   
-  GWX_TO_USD                           = 0.003
+  GWX_TO_USD                                  = 0.003
 
-  BLOCKCHAIN_NETWORK                   = Rails.env.production? ? "BTC" : "BTCTEST"
-  CHAIN_SO_API_GET_ADDRESS_BALANCE_URL = "https://chain.so/api/v2/get_address_balance/" 
-  COINCAP_API_GET_BTC_TO_USD_PRICE_URL = "https://api.coincap.io/v2/assets?ids=bitcoin"
+  BLOCKCHAIN_NETWORK                          = Rails.env.production? ? "btc" : "test3"
+  CHAIN_SO_API_GET_ADDRESS_BALANCE_URL        = "https://chain.so/api/v2/get_address_balance/" 
+  BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL = "https://api.blockcypher.com/v1/btc/#{BLOCKCHAIN_NETWORK}/addrs/" 
+  COINCAP_API_GET_BTC_TO_USD_PRICE_URL        = "https://api.coincap.io/v2/assets?ids=bitcoin"
   
   class BtcUtilServiceError < StandardError; end
 
@@ -37,7 +38,7 @@ class BtcUtilService < BaseUtilService
     end 
     
     # save the receiving wallet_address
-    transactionn.top_up_receiving_wallet_address = Rails.env.production? ? child_node.to_address : child_node.to_address(network: :bitcoin_testnet)
+    transaction.top_up_receiving_wallet_address = Rails.env.production? ? child_node.to_address : child_node.to_address(network: :bitcoin_testnet)
 
     raise BtcUtilServiceError, "Transaction save failed." unless transaction.save   
 
@@ -49,7 +50,7 @@ class BtcUtilService < BaseUtilService
 
     begin
       # call the API endpoint
-      response = HTTParty.get("#{CHAIN_SO_API_GET_ADDRESS_BALANCE_URL}#{BLOCKCHAIN_NETWORK}/#{transaction.top_up_receiving_wallet_address}")
+      response = HTTParty.get("#{BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}")
       
       # make sure the response code is :ok before continuing
       raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
