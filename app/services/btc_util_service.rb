@@ -4,7 +4,7 @@ class BtcUtilService < BaseUtilService
 
   BLOCKCHAIN_NETWORK                   = Rails.env.production? ? "BTC" : "BTCTEST"
   CHAIN_SO_API_GET_ADDRESS_BALANCE_URL = "https://chain.so/api/v2/get_address_balance/" 
-  CHAIN_SO_API_GET_PRICE_URL           = "https://chain.so/api/v2/get_price"
+  COINCAP_API_GET_BTC_TO_USD_PRICE_URL = "https://api.coincap.io/v2/assets?ids=bitcoin"
   
   class BtcUtilServiceError < StandardError; end
 
@@ -15,14 +15,10 @@ class BtcUtilService < BaseUtilService
     
     result = TopUpTransaction.where(transaction_type: "btc").where.not(bip32_address_path: nil).order("created_at ASC")
     if result.empty?
+      # retrieve the child_node from the computed bip32_address_path
       child_node  = parent_node.node_for_path("m/0/0")
-      
-      transaction.top_up_receiving_wallet_address = 
-        if Rails.env.production? 
-          child_node.to_address 
-        else
-          child_node.to_address(network: :bitcoin_testnet)
-        end  
+
+      # save the bip32_address_path
       transaction.bip32_address_path = "m/0/0"
     else
       # retrieve the last node count
@@ -36,18 +32,14 @@ class BtcUtilService < BaseUtilService
       # retrieve the child_node from the computed bip32_address_path
       child_node = parent_node.node_for_path(bip32_address_path)
 
-      # save the receiving wallet_address
-      transaction.top_up_receiving_wallet_address = if Rails.env.production? 
-         child_node.to_address 
-        else
-          child_node.to_address(network: :bitcoin_testnet)
-        end  
-      
       # save the bip32_address_path
       transaction.bip32_address_path = bip32_address_path
     end 
+    
+    # save the receiving wallet_address
+    transactionn.top_up_receiving_wallet_address = Rails.env.production? ? child_node.to_address : child_node.to_address(network: :bitcoin_testnet)
 
-    transaction.save   
+    raise BtcUtilServiceError, "Transaction save failed." unless transaction.save   
 
 
     return transaction
@@ -77,7 +69,7 @@ class BtcUtilService < BaseUtilService
   end  
 
   def get_btc_usd_conversion_rate
-    response = HTTParty.get("#{CHAIN_SO_API_GET_PRICE_URL}/BTC/USD")
+    response = HTTParty.get(COINCAP_API_GET_BTC_TO_USD_PRICE_URL)
     
     # make sure the response code is :ok before continuing
     raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
@@ -86,19 +78,15 @@ class BtcUtilService < BaseUtilService
     result = JSON.parse(response.body)
     
     # get the btc to USD exchange rate
-    exchange_rate = result["data"]["prices"][0]["price"]
-    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'price' value." if exchange_rate.nil?
+    exchange_rate = (result["data"][0]["priceUsd"]).to_f
+    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
     
-    # get the timestamp
-    timestamp = result["data"]["prices"][0]["time"] 
-    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'time' value." if timestamp.nil?
-    
-    return exchange_rate.to_f, Time.at(timestamp).utc
+    return exchange_rate.to_f 
   end
   
   def convert_btc_to_gwx(btc_value)
     
-    btc_to_usd_conversation_rate = (self.get_btc_usd_conversion_rate)[0]
+    btc_to_usd_conversation_rate = self.get_btc_usd_conversion_rate
     
     return (btc_value * btc_to_usd_conversation_rate) / GWX_TO_USD
   end
