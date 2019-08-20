@@ -46,11 +46,12 @@ class BtcUtilService < BaseUtilService
   end
 
   def check_btc_wallet_balance(transaction)
-
     begin
       # call the API endpoint
+      puts "ERROR HANDLING"
+      puts request = "#{BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}"
+      puts "=============="
       response = HTTParty.get("#{BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}")
-
       # make sure the response code is :ok before continuing
       raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
 
