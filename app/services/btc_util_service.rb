@@ -51,7 +51,11 @@ class BtcUtilService < BaseUtilService
       puts "ERROR HANDLING"
       puts request = "#{BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}"
       puts "=============="
+
       response = HTTParty.get("#{BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL}#{transaction.top_up_receiving_wallet_address}")
+      puts "=====RESPONSE===="
+      puts response
+      puts "================="
       # make sure the response code is :ok before continuing
       raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
 
@@ -60,6 +64,10 @@ class BtcUtilService < BaseUtilService
 
       # retrieve confirmed_balance data
       confirmed_balance = result["balance"]
+      puts "====BALANCE===="
+      puts confirmed_balance
+      puts "==============="
+      
       raise "Was not able to returned JSON data 'balance' "if confirmed_balance.nil?
 
     rescue Exception => e
