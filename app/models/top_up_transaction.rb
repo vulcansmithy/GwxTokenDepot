@@ -90,20 +90,24 @@ class TopUpTransaction < ApplicationRecord
       after do
         puts "@DEBUG L:#{__LINE__}   Transfer complete!"
         
-        # save the updated state
-        self.save
-        
         # instantiate gwx cashier
-        gwx_cashier = GwxCashierLib.new
+        gwx_cashier = GwxCashierClient.new
         
         # transfer x amount of gwx tokens to the provided gwx_wallet
-        result = gwx_cashier.wallet_transfer(
-          Rails.application.secrets.gwx_distribution_wallet,
-          self.gwx_wallet_address,
-          Rails.application.secrets.gwx_distribution_wallet_pk,
-          self.gwx_to_transfer
-        )
-        
+        result = gwx_cashier.create_transaction(transaction_params: {
+          source_wallet_address: Rails.application.secrets.gwx_distribution_wallet,
+          destination_wallet_address: self.gwx_wallet_address,
+          quantity: self.gwx_to_transfer
+        })
+        self.outgoing_id = result["data"]["id"]
+        # save the updated state
+        self.save
+
+        outgoing_tx = GwxCashierClient.get_transaction(id: result["data"]["id"])
+        puts "==========="
+        puts outgoing_tx
+        puts "==========="
+
         raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result[:status] == "success"
       end
     end

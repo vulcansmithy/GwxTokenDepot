@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_052510) do
+ActiveRecord::Schema.define(version: 2019_08_28_091603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_08_02_052510) do
     t.string "encrypted_top_up_receiving_wallet_pk_iv"
     t.string "bip44_address_path"
     t.string "message"
+    t.integer "outgoing_id"
   end
 
 end
