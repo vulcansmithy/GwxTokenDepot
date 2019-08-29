@@ -91,10 +91,10 @@ class TopUpTransaction < ApplicationRecord
         puts "@DEBUG L:#{__LINE__}   Transfer complete!"
         
         # instantiate gwx cashier
-        gwx_cashier = GwxCashierClient.new
+        # gwx_cashier = GwxCashierClient.new
         
         # transfer x amount of gwx tokens to the provided gwx_wallet
-        result = gwx_cashier.create_transaction(transaction_params: {
+        result = GwxCashierClient.create_transaction(transaction_params: {
           source_wallet_address: Rails.application.secrets.gwx_distribution_wallet,
           destination_wallet_address: self.gwx_wallet_address,
           quantity: self.gwx_to_transfer
