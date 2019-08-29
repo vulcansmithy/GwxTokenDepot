@@ -99,6 +99,9 @@ class TopUpTransaction < ApplicationRecord
           destination_wallet_address: self.gwx_wallet_address,
           quantity: self.gwx_to_transfer
         })
+        puts "=================="
+        puts result
+        puts "=================="
         self.outgoing_id = result["data"]["id"]
         # save the updated state
         self.save
