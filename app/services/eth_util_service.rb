@@ -26,7 +26,7 @@ class EthUtilService < BaseUtilService
       # increment the count by 1
       count += 1
       
-      bip32_address_path = "m/44'/60'/0'/#{count}"
+      bip44_address_path = "m/44'/60'/0'/#{count}"
 
       # retrieve the wallet from the computed bip44_address_path
       wallet = Bip44::Wallet.from_seed(eth_master_seed, bip44_address_path)
