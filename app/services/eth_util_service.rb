@@ -79,14 +79,14 @@ class EthUtilService < BaseUtilService
     
     # get the eth to USD exchange rate
     exchange_rate = (result["data"][0]["priceUsd"]).to_f
-    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
+    raise EthUtilService, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
 
-    return exchange_rate
+    return exchange_rate.to_f
   end
   
   def convert_eth_to_gwx(eth_value)
     
-    eth_to_usd_conversation_rate = (self.get_eth_usd_conversion_rate)[0]
+    eth_to_usd_conversation_rate = self.get_eth_usd_conversion_rate
     
     return (eth_value * eth_to_usd_conversation_rate) / GWX_TO_USD
   end
