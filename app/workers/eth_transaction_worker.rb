@@ -13,7 +13,7 @@ class EthTransactionWorker
     # check if still in the receiving period window
     if (starting_point..ending_point).cover?(time_now)
       
-      eth_service = BtcUtilService.new
+      eth_service = EthUtilService.new
       
       # retrieve current_balance
       current_balance = eth_service.check_eth_wallet_balance(eth_transaction)
@@ -27,7 +27,7 @@ class EthTransactionWorker
         puts "@DEBUG L:#{__LINE__}      Rescheduling...      "
         puts "@DEBUG L:#{__LINE__}      Transaction ID: #{transaction_id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
-        BtcTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, eth_transaction.id)
+        EthTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, eth_transaction.id)
 
       elsif current_balance >= expected_to_receive
 
