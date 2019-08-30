@@ -35,7 +35,7 @@ class EthTransactionWorker
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
         puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction_id}"
         puts "@DEBUG L:#{__LINE__}   ***************************"
-        eth.confirm_transaction_successful
+        eth_transaction.confirm_transaction_successful
         
         # transfer the gwx to the gwx_wallet_address
         eth_transaction.transfer_gwx_to_gwx_wallet
