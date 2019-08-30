@@ -1,6 +1,6 @@
 class EthUtilService < BaseUtilService
   
-  GWX_TO_USD                      = 0.003
+  GWX_TO_USD                      = 0.20
   
   BLOCKCYPHER_API_GET_BALANCE_URL = "https://api.blockcypher.com/v1/eth/main/addrs/"
   COINCAPI_API_GET_USD_VALUE_URL  = "https://api.coincap.io/v2/assets?ids=ethereum"
