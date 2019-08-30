@@ -1,6 +1,6 @@
 class XemUtilService < BaseUtilService
   
-  GWX_TO_USD = 0.003
+  GWX_TO_USD = 0.20
   
   class XemUtilServiceError < StandardError; end
 

@@ -66,9 +66,9 @@ class Api::V1::TopUpTransactionsController < Api::V1::BaseController
       error_response("Invalid passed eth value.", e.message, :bad_request)
     else
       eth_service = EthUtilService.new
-      gwx_value   = eth_service.convert_xem_to_gwx(xem_value)
+      gwx_value   = eth_service.convert_eth_to_gwx(eth_value)
 
-      success_response({ xem: xem_value, gwx: gwx_value })
+      success_response({ eth: eth_value, gwx: gwx_value })
     end
   end
   

@@ -1,6 +1,6 @@
 class BtcUtilService < BaseUtilService
 
-  GWX_TO_USD                                  = 0.003
+  GWX_TO_USD                                  = 0.20
 
   BLOCKCHAIN_NETWORK                          = Rails.env.production? ? "btc" : "test3"
   BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL = "https://api.blockcypher.com/v1/#{BLOCKCHAIN_NETWORK}/main/addrs/"
