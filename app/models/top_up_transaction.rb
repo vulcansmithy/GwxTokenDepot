@@ -28,7 +28,7 @@ class TopUpTransaction < ApplicationRecord
     state :pending
     state :transaction_successful
     state :transaction_unsuccessful
-    state :waiting_for_gwx
+    state :pending_gwx_transfer
     state :gwx_transferred
 
     event :assign_payment_receiving_wallet do
@@ -82,7 +82,7 @@ class TopUpTransaction < ApplicationRecord
     end  
     
     event :transfer_gwx_to_gwx_wallet do
-      transitions from: :transaction_successful, to: :waiting_for_gwx
+      transitions from: :transaction_successful, to: :pending_gwx_transfer
       
       before do
         # @TODO call transfer
@@ -114,7 +114,7 @@ class TopUpTransaction < ApplicationRecord
     end
 
     event :confirm_gwx_status_from_cashier do
-      transitions from: :waiting_for_gwx, to: :gwx_transferred
+      transitions from: :pending_gwx_transfer, to: :gwx_transferred
 
       before do
         puts "==========="
@@ -149,7 +149,7 @@ class TopUpTransaction < ApplicationRecord
       self.aasm_state
     when TopUpTransaction::STATE_TRANSACTION_UNSUCCESSFUL
       self.aasm_state
-    when TopUpTransaction::STATE_WAITING_FOR_GWX
+    when TopUpTransaction::STATE_PENDING_GWX_TRANSFER
       self.aasm_state
     when TopUpTransaction::STATE_GWX_TRANSFERRED
       self.aasm_state
