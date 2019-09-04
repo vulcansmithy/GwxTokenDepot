@@ -39,6 +39,7 @@ class EthTransactionWorker
         
         # transfer the gwx to the gwx_wallet_address
         eth_transaction.transfer_gwx_to_gwx_wallet
+        GwxTransactionWorker.perform_in(2.minutes, eth_transaction.id)
       else
         
         puts "@DEBUG L:#{__LINE__}   ***************************"

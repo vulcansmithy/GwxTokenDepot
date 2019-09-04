@@ -28,6 +28,7 @@ class TopUpTransaction < ApplicationRecord
     state :pending
     state :transaction_successful
     state :transaction_unsuccessful
+    state :pending_gwx_transfer
     state :gwx_transferred
 
     event :assign_payment_receiving_wallet do
@@ -81,7 +82,7 @@ class TopUpTransaction < ApplicationRecord
     end  
     
     event :transfer_gwx_to_gwx_wallet do
-      transitions from: :transaction_successful, to: :gwx_transferred
+      transitions from: :transaction_successful, to: :pending_gwx_transfer
       
       before do
         # @TODO call transfer
@@ -89,9 +90,6 @@ class TopUpTransaction < ApplicationRecord
       
       after do
         puts "@DEBUG L:#{__LINE__}   Transfer complete!"
-        
-        # instantiate gwx cashier
-        # gwx_cashier = GwxCashierClient.new
         
         # transfer x amount of gwx tokens to the provided gwx_wallet
         result = GwxCashierClient.create_transaction(transaction_params: {
@@ -114,6 +112,29 @@ class TopUpTransaction < ApplicationRecord
         raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result[:status] == "success"
       end
     end
+
+    event :confirm_gwx_status_from_cashier do
+      return unless self.gwx_transaction_hash.nil?
+
+      transitions from: :pending_gwx_transfer, to: :gwx_transferred
+
+      before do
+      end
+
+      after do
+        puts "============"
+        puts "FROM CASHIER"
+        puts "============"
+
+        if self.outgoing_id
+          result = GwxCashierClient.get_transaction(id: self.outgoing_id)
+          self.gwx_transaction_hash = result["data"]["attributes"]["txHash"]
+          self.gwx_transaction_message = result["data"]["attributes"]["transactionDetails"]["message"]
+          self.gwx_transaction_status = result["data"]["attributes"]["transactionDetails"]["status"]
+          self.save
+        end
+      end
+    end
   end
 
   def status
@@ -123,10 +144,13 @@ class TopUpTransaction < ApplicationRecord
     when TopUpTransaction::STATE_PAYMENT_RECEIVING_WALLET_ASSIGNED, 
          TopUpTransaction::STATE_PENDING  
       TopUpTransaction::STATE_PENDING
-    when TopUpTransaction::STATE_TRANSACTION_SUCCESSFUL,
-         TopUpTransaction::STATE_GWX_TRANSFERRED
+    when TopUpTransaction::STATE_TRANSACTION_SUCCESSFUL
       self.aasm_state
     when TopUpTransaction::STATE_TRANSACTION_UNSUCCESSFUL
+      self.aasm_state
+    when TopUpTransaction::STATE_PENDING_GWX_TRANSFER
+      self.aasm_state
+    when TopUpTransaction::STATE_GWX_TRANSFERRED
       self.aasm_state
     else
       :unrecognized_status
