@@ -39,6 +39,7 @@ class XemTransactionWorker
         
         # transfer the gwx to the gwx_wallet_address
         xem_transaction.transfer_gwx_to_gwx_wallet
+        xem_transaction.confirm_gwx_status_from_cashier
       else
         
         puts "@DEBUG L:#{__LINE__}   ***************************"
