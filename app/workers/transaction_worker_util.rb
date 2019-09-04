@@ -48,7 +48,7 @@ module TransactionWorkerUtil
         
         # transfer the gwx to the gwx_wallet_address
         transaction.transfer_gwx_to_gwx_wallet
-        transaction.confirm_gwx_status_from_cashier
+        GwxTransactionWorker.perform_in(2.minutes, transaction.id)
       else
         
         puts "@DEBUG L:#{__LINE__}   ***************************"
