@@ -113,13 +113,10 @@ class TopUpTransaction < ApplicationRecord
       end
     end
 
-    event :confirm_gwx_status_from_cashier do
+    event :confirm_gwx_status_from_cashier do return self.gwx_transaction_hash.nil?
       transitions from: :pending_gwx_transfer, to: :gwx_transferred
 
       before do
-        puts "==========="
-        puts "TESTING"
-        puts "==========="
       end
 
       after do
@@ -129,10 +126,10 @@ class TopUpTransaction < ApplicationRecord
 
         if self.outgoing_id
           result = GwxCashierClient.get_transaction(id: self.outgoing_id)
-          self.gwx_transaction_hash = result
+          self.gwx_transaction_hash = result["data"]["attributes"]["txHash"]
+          self.gwx_transaction_message = result["data"]["attributes"]["transactionDetails"]["message"]
+          self.gwx_transaction_status = result["data"]["attributes"]["transactionDetails"]["status"]
           self.save
-        else
-          return false
         end
       end
     end
