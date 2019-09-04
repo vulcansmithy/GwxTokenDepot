@@ -129,7 +129,7 @@ class TopUpTransaction < ApplicationRecord
 
         if self.outgoing_id
           result = GwxCashierClient.get_transaction(id: self.outgoing_id)
-          self.top_up_transaction_hash = result
+          self.gwx_transaction_hash = result
           self.save
         else
           return false
