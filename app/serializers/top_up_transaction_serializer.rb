@@ -12,7 +12,9 @@ class TopUpTransactionSerializer < ActiveModel::Serializer
     :gwx_to_transfer,
     :top_up_receiving_wallet_address,
     :created_at,
-    :gwx_transaction_hash
+    :gwx_transaction_hash,
+    :gwx_transaction_status,
+    :gwx_transaction_message
 #   :top_up_transaction_hash,
 #   :top_up_transaction_at,
 #   :gwx_transaction_at
