@@ -97,17 +97,11 @@ class TopUpTransaction < ApplicationRecord
           destination_wallet_address: self.gwx_wallet_address,
           quantity: self.gwx_to_transfer
         })
-        puts "=================="
-        puts result
-        puts "=================="
         self.outgoing_id = result["data"]["id"]
         # save the updated state
         self.save
 
         outgoing_tx = GwxCashierClient.get_transaction(id: result["data"]["id"])
-        puts "==========="
-        puts outgoing_tx
-        puts "==========="
 
         raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result[:status] == "success"
       end
