@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2019_09_04_072231) do
+=======
+ActiveRecord::Schema.define(version: 2019_09_05_032024) do
+>>>>>>> Add real time conversion controller and model
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "real_time_rates", force: :cascade do |t|
+    t.decimal "btc_rate"
+    t.decimal "eth_rate"
+    t.decimal "xem_rate"
+    t.datetime "real_time_at"
+  end
 
   create_table "top_up_transactions", force: :cascade do |t|
     t.integer "user_id"
