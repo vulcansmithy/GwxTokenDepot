@@ -114,9 +114,7 @@ class TopUpTransaction < ApplicationRecord
     end
 
     event :confirm_gwx_status_from_cashier do
-      return unless self.gwx_transaction_hash.nil?
-
-      transitions from: :pending_gwx_transfer, to: :gwx_transferred
+      transitions from: :pending_gwx_transfer, to: :gwx_transferred, guard: :gwx_transaction_hash.present?
 
       before do
       end
@@ -171,5 +169,8 @@ class TopUpTransaction < ApplicationRecord
       raise TopUpTransactionError, e.message
     end  
   end
-  
+
+  def gwx_transaction_hash_present?
+    self.gwx_transaction_hash.present?
+  end
 end
