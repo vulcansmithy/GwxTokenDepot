@@ -2,7 +2,12 @@ class Api::V1::RealTimeRatesController < Api::V1::BaseController
   include HTTParty
 
   def get_rates
+    if Rails.env.production?
+    response = HTTParty.get("https://api.coinlayer.com/live?access_key=#{Rails.application.secrets.coinlayer_api_key}")
+    else
     response = HTTParty.get("http://api.coinlayer.com/live?access_key=#{Rails.application.secrets.coinlayer_api_key}")
+    end
+
     result = JSON.parse(response.body)
     rates = RealTimeRate.new({
       btc_rate: result["rates"]["BTC"],
