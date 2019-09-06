@@ -1,6 +1,6 @@
 class BtcUtilService < BaseUtilService
 
-  GWX_TO_USD                                  = 0.20
+  GWX_TO_USD                                  = 0.019
 
   BLOCKCHAIN_NETWORK                          = Rails.env.production? ? "btc" : "test3"
   BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL = "https://api.blockcypher.com/v1/#{BLOCKCHAIN_NETWORK}/main/addrs/"
@@ -67,7 +67,7 @@ class BtcUtilService < BaseUtilService
       puts "====BALANCE===="
       puts confirmed_balance
       puts "==============="
-      
+
       raise "Was not able to returned JSON data 'balance' "if confirmed_balance.nil?
 
     rescue Exception => e
