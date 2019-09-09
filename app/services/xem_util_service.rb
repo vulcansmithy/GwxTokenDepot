@@ -40,7 +40,7 @@ class XemUtilService < BaseUtilService
   def convert_xem_to_gwx(xem_value)
     xem_to_usd_conversation_rate = self.get_xem_usd_conversion_rate
 
-    return (xem_value * xem_to_usd_conversation_rate) / GWX_TO_USD
+    return (xem_value * GWX_TO_USD) / xem_to_usd_conversation_rate
   end
 
 end
