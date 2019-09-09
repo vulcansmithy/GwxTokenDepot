@@ -97,7 +97,7 @@ class BtcUtilService < BaseUtilService
 
     btc_to_usd_conversation_rate = self.get_btc_usd_conversion_rate
 
-    return (btc_value * btc_to_usd_conversation_rate) / GWX_TO_USD
+    return (btc_value * GWX_TO_USD) / btc_to_usd_conversation_rate
   end
 
 end

@@ -88,7 +88,7 @@ class EthUtilService < BaseUtilService
 
     eth_to_usd_conversation_rate = self.get_eth_usd_conversion_rate
 
-    return (eth_value * eth_to_usd_conversation_rate) / GWX_TO_USD
+    return (eth_value * GWX_TO_USD) / eth_to_usd_conversation_rate
   end
 
 end
