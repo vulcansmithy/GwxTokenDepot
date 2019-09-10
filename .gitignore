@@ -34,3 +34,6 @@ dump.rdb
 
 # Ignore sandbox.rb
 /lib/sandbox.rb
+
+# Ignore generated simplecov generated files
+coverage/*
