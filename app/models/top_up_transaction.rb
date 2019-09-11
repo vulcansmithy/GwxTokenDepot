@@ -26,8 +26,8 @@ class TopUpTransaction < ApplicationRecord
     state :initiated, initial: true
     state :payment_receiving_wallet_assigned
     state :pending
-    state :transaction_successful
-    state :transaction_unsuccessful
+    state :purchase_confirmed
+    state :failed
     state :pending_gwx_transfer
     state :gwx_transferred
 
@@ -64,7 +64,7 @@ class TopUpTransaction < ApplicationRecord
     end
     
     event :confirm_transaction_successful do
-      transitions from: :pending, to: :transaction_successful
+      transitions from: :pending, to: :purchase_confirmed
       
       after do
         # save the updated state
@@ -73,7 +73,7 @@ class TopUpTransaction < ApplicationRecord
     end
     
     event :set_transaction_unssuccesful do
-      transitions from: :pending, to: :transaction_unsuccessful
+      transitions from: :pending, to: :failed
       
       after do
         # save the updated state
@@ -82,7 +82,7 @@ class TopUpTransaction < ApplicationRecord
     end  
     
     event :transfer_gwx_to_gwx_wallet do
-      transitions from: :transaction_successful, to: :pending_gwx_transfer
+      transitions from: :purchase_confirmed, to: :pending_gwx_transfer
       
       before do
         # @TODO call transfer
@@ -136,13 +136,13 @@ class TopUpTransaction < ApplicationRecord
     when TopUpTransaction::STATE_PAYMENT_RECEIVING_WALLET_ASSIGNED, 
          TopUpTransaction::STATE_PENDING  
       TopUpTransaction::STATE_PENDING
-    when TopUpTransaction::STATE_TRANSACTION_SUCCESSFUL
-      self.aasm_state
-    when TopUpTransaction::STATE_TRANSACTION_UNSUCCESSFUL
+    when TopUpTransaction::STATE_FAILED
       self.aasm_state
     when TopUpTransaction::STATE_PENDING_GWX_TRANSFER
       self.aasm_state
     when TopUpTransaction::STATE_GWX_TRANSFERRED
+      self.aasm_state
+    when TopUpTransaction::STATE_PURCHASE_CONFIRMED
       self.aasm_state
     else
       :unrecognized_status
