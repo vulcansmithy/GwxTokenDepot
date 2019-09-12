@@ -19,7 +19,7 @@ class EthTransactionWorker
       current_balance = eth_service.check_eth_wallet_balance(eth_transaction)
       
       # convert the quantity_to_receive into a BigDecimal
-      expected_to_receive = BigDecimal(eth_transaction.gwx_to_transfer)
+      expected_to_receive = BigDecimal(eth_transaction.quantity_to_receive)
       
       if current_balance == 0
 

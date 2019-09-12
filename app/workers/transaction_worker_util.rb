@@ -20,7 +20,7 @@ module TransactionWorkerUtil
       current_balance = BigDecimal(result.to_s)
 
       # convert the quantity_to_receive into a BigDecimal
-      expected_to_receive = BigDecimal(transaction.gwx_to_transfer)
+      expected_to_receive = BigDecimal(transaction.quantity_to_receive)
       
       if current_balance == 0.0
 

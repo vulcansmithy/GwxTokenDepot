@@ -19,7 +19,7 @@ class XemTransactionWorker
       current_balance = xem_service.check_xem_wallet_balance(xem_transaction)
       
       # convert the quantity_to_receive into a BigDecimal
-      expected_to_receive = BigDecimal(xem_transaction.gwx_to_transfer)
+      expected_to_receive = BigDecimal(xem_transaction.quantity_to_receive)
       
       if current_balance == 0
 
