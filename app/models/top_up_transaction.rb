@@ -51,7 +51,7 @@ class TopUpTransaction < ApplicationRecord
     end  
     
     event :start_listening_for_incoming_transfer do
-      transitions from: [:payment_receiving_wallet_assigned, :transaction_successful, :transaction_unsuccessful], to: :pending
+      transitions from: [:payment_receiving_wallet_assigned, :purchase_confirmed, :failed], to: :pending
 
       before do
         schedule_the_appropriate_job(self)
