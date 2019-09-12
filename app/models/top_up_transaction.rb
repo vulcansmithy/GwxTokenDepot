@@ -95,7 +95,7 @@ class TopUpTransaction < ApplicationRecord
         result = GwxCashierClient.create_transaction(transaction_params: {
           source_wallet_address: Rails.application.secrets.gwx_distribution_wallet,
           destination_wallet_address: self.gwx_wallet_address,
-          quantity: self.gwx_to_transfer
+          quantity: self.quantity_to_receive
         })
         self.outgoing_id = result["data"]["id"]
         # save the updated state
