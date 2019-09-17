@@ -11,34 +11,6 @@ class NemService
 
   TIMEOUT = 15
 
-  # NEM_NODE =
-  #   if Rails.env.production?
-  #     Nem::NodePool.new([
-  #       Nem::Node.new(host: '62.75.251.134', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '62.75.163.236', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '209.126.98.204', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '108.61.182.27', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '27.134.245.213', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '104.168.152.37', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '122.116.90.171', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '153.122.86.201', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '150.95.213.212', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '163.44.170.40', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '153.126.157.201', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '45.76.192.220', timeout: TIMEOUT)
-  #     ])
-  #   else
-  #     Nem::NodePool.new([
-  #       Nem::Node.new(host: '23.228.67.85', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '104.128.226.60', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '150.95.145.157', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '80.93.182.146', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '82.196.9.187', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '82.196.9.187', timeout: TIMEOUT),
-  #       Nem::Node.new(host: '88.166.14.34', timeout: TIMEOUT)
-  #     ])
-  #   end
-
   NEM_NODE =
     if Rails.env.production?
       Nem::NodePool.new([
