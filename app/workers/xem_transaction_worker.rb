@@ -53,6 +53,10 @@ class XemTransactionWorker
       puts "@DEBUG L:#{__LINE__}   *  Transaction FAILED!!!   "
       puts "@DEBUG L:#{__LINE__}   *  Transaction ID: #{transaction_id}"
       puts "@DEBUG L:#{__LINE__}   ***************************"
+
+      xem_transaction.message = "As of #{Time.now}, the receiving wallet current balance is #{current_balance}. The expected balance was #{expected_to_receive}. This transaction was unsuccessful."
+      puts "@DEBUG L:#{__LINE__}   transaction.save=#{xem_transaction.save}"
+
       xem_transaction.set_transaction_unssuccesful
     end
   end

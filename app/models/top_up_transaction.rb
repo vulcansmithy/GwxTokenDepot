@@ -30,6 +30,7 @@ class TopUpTransaction < ApplicationRecord
     state :failed
     state :pending_gwx_transfer
     state :gwx_transferred
+    state :cancelled
 
     event :assign_payment_receiving_wallet do
       transitions from: :initiated, to: :payment_receiving_wallet_assigned
@@ -51,7 +52,7 @@ class TopUpTransaction < ApplicationRecord
     end  
     
     event :start_listening_for_incoming_transfer do
-      transitions from: [:payment_receiving_wallet_assigned, :purchase_confirmed, :failed], to: :pending
+      transitions from: [:payment_receiving_wallet_assigned, :purchase_confirmed, :failed, :cancelled], to: :pending
 
       before do
         schedule_the_appropriate_job(self)
@@ -73,7 +74,7 @@ class TopUpTransaction < ApplicationRecord
     end
     
     event :set_transaction_unssuccesful do
-      transitions from: :pending, to: :failed
+      transitions from: :pending, to: :cancelled
       
       after do
         # save the updated state
@@ -108,7 +109,7 @@ class TopUpTransaction < ApplicationRecord
     end
 
     event :confirm_gwx_status_from_cashier do
-      transitions from: :pending_gwx_transfer, to: :gwx_transferred, guard: :gwx_transaction_hash.present?
+      transitions from: :pending_gwx_transfer, to: :gwx_transferred, guard: :gwx_transaction_hash.present? && :gwx_transaction_status.success?
 
       before do
       end
@@ -117,6 +118,24 @@ class TopUpTransaction < ApplicationRecord
         puts "============"
         puts "FROM CASHIER"
         puts "============"
+
+        if self.outgoing_id
+          result = GwxCashierClient.get_transaction(id: self.outgoing_id)
+          self.gwx_transaction_hash = result["data"]["attributes"]["txHash"]
+          self.gwx_transaction_message = result["data"]["attributes"]["transactionDetails"]["message"]
+          self.gwx_transaction_status = result["data"]["attributes"]["transactionDetails"]["status"]
+          self.save
+        end
+      end
+    end
+
+    event :validate_gwx_status_from_cashier do
+      transitions from: :pending_gwx_transfer, to: :failed, guard: :gwx_transaction_hash.present? || :gwx_transaction_status.failed?
+
+      before do
+      end
+
+      after do
 
         if self.outgoing_id
           result = GwxCashierClient.get_transaction(id: self.outgoing_id)
@@ -144,6 +163,8 @@ class TopUpTransaction < ApplicationRecord
       self.aasm_state
     when TopUpTransaction::STATE_PURCHASE_CONFIRMED
       self.aasm_state
+    when TopUpTransaction::STATE_CANCELLED
+      self.aasm_state
     else
       :unrecognized_status
     end
@@ -166,5 +187,13 @@ class TopUpTransaction < ApplicationRecord
 
   def gwx_transaction_hash_present?
     self.gwx_transaction_hash.present?
+  end
+
+  def gwx_transaction_status_success?
+    self.gwx_transaction_status === 'success'
+  end
+
+  def gwx_transaction_status_failed?
+    self.gwx_transaction_status === 'failed'
   end
 end
