@@ -130,7 +130,7 @@ class TopUpTransaction < ApplicationRecord
     end
 
     event :validate_gwx_status_from_cashier do
-      transitions from: :pending_gwx_transfer, to: :failed, guard: :gwx_transaction_hash.present? || :gwx_transaction_status.failed?
+      transitions from: :pending_gwx_transfer, to: :failed, guard: :gwx_transaction_status.failed?
 
       before do
       end
