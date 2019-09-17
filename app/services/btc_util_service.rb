@@ -4,7 +4,6 @@ class BtcUtilService < BaseUtilService
 
   BLOCKCHAIN_NETWORK                          = Rails.env.production? ? "btc" : "test3"
   BLOCKCYPHER_API_GET_BTC_ADDRESS_BALANCE_URL = "https://api.blockcypher.com/v1/#{BLOCKCHAIN_NETWORK}/main/addrs/"
-  COINCAP_API_GET_BTC_TO_USD_PRICE_URL        = "https://api.coincap.io/v2/assets?ids=bitcoin"
 
   class BtcUtilServiceError < StandardError; end
 
@@ -78,17 +77,8 @@ class BtcUtilService < BaseUtilService
   end
 
   def get_btc_usd_conversion_rate
-    response = HTTParty.get(COINCAP_API_GET_BTC_TO_USD_PRICE_URL)
-
-    # make sure the response code is :ok before continuing
-    raise BtcUtilServiceError, "Can't reach API endpoint." unless response.code == 200
-
-    # parse the returned data
-    result = JSON.parse(response.body)
-
     # get the btc to USD exchange rate
-    exchange_rate = (result["data"][0]["priceUsd"]).to_f
-    raise BtcUtilServiceError, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
+    exchange_rate = RealTimeRate.last.btc_rate.to_f
 
     return exchange_rate.to_f
   end

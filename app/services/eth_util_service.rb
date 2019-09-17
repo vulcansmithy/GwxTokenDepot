@@ -69,17 +69,8 @@ class EthUtilService < BaseUtilService
   end
 
   def get_eth_usd_conversion_rate
-    response = HTTParty.get(COINCAPI_API_GET_USD_VALUE_URL)
-
-    # make sure the response code is :ok before continuing
-    raise EthUtilService, "Can't reach API endpoint." unless response.code == 200
-
-    # parse the returned data
-    result = JSON.parse(response.body)
-
     # get the eth to USD exchange rate
-    exchange_rate = (result["data"][0]["priceUsd"]).to_f
-    raise EthUtilService, "Can't reach the API endpoint. Was not able to get the 'priceUsd' value." if exchange_rate.nil?
+    exchange_rate = RealTimeRate.last.eth_rate.to_f
 
     return exchange_rate.to_f
   end
