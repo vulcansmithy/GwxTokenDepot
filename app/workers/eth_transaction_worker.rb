@@ -29,7 +29,7 @@ class EthTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         EthTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, eth_transaction.id)
 
-      elsif current_balance >= expected_to_receive
+      elsif current_balance > 0 && expected_to_receive > 0
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
