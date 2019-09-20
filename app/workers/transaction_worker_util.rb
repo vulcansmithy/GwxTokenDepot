@@ -35,7 +35,7 @@ module TransactionWorkerUtil
         # reschedule the worker
         Object.const_get("#{transaction_type.titlecase}TransactionWorker").perform_in(TopUpTransaction::SCHEDULED_INTERVAL, transaction.id)
         
-      elsif current_balance > 0 && expected_to_receive > 0
+      elsif current_balance == transaction.gwx_to_transfer && expected_to_receive > 0
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
