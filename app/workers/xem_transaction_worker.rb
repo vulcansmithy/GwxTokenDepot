@@ -29,7 +29,7 @@ class XemTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         XemTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, xem_transaction.id)
 
-      elsif current_balance == xem_transaction.gwx_to_transfer && expected_to_receive > 0 
+      elsif current_balance == xem_transaction.gwx_to_transfer.to_f && expected_to_receive > 0
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
