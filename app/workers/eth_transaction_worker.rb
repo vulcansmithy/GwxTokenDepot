@@ -29,7 +29,7 @@ class EthTransactionWorker
         puts "@DEBUG L:#{__LINE__}   ***************************"
         EthTransactionWorker.perform_in(TopUpTransaction::SCHEDULED_INTERVAL, eth_transaction.id)
 
-      elsif current_balance == eth_transaction.gwx_to_transfer.to_f && expected_to_receive > 0
+      elsif current_balance >= expected_to_receive 
 
         puts "@DEBUG L:#{__LINE__}   ***************************"
         puts "@DEBUG L:#{__LINE__}   *  Transaction Successful!  "
@@ -39,7 +39,7 @@ class EthTransactionWorker
         
         # transfer the gwx to the gwx_wallet_address
         eth_transaction.transfer_gwx_to_gwx_wallet
-        GwxTransactionWorker.perform_in(2.minutes, eth_transaction.id)
+        GwxTransactionWorker.perform_in(30.seconds, eth_transaction.id)
       else
         
         puts "@DEBUG L:#{__LINE__}   ***************************"
