@@ -104,7 +104,7 @@ class TopUpTransaction < ApplicationRecord
 
         outgoing_tx = GwxCashierClient.get_transaction(id: result["data"]["id"])
 
-        raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result["data"]["status"] == "success"
+        raise TopUpTransactionError, "Can't transfer the amount of #{self.gwx_to_transfer} gwx to the specified gwx wallet." unless result["data"]["attributes"]["status"] == "success"
       end
     end
 
@@ -125,6 +125,24 @@ class TopUpTransaction < ApplicationRecord
           self.gwx_transaction_message = result["data"]["attributes"]["transactionDetails"]["message"]
           self.gwx_transaction_status = result["data"]["attributes"]["transactionDetails"]["status"]
           self.save
+
+          if result["data"]["attributes"]["transactionDetails"]["status"] === 'success' && (10000..499000) === result["data"]["attributes"]["quantity"].to_f
+            result = GwxCashierClient.create_xem_transaction(transaction_params: {
+              source_wallet_address: Rails.application.secrets.gwx_distribution_wallet,
+              destination_wallet_address: self.gwx_wallet_address,
+              quantity: 0.5
+            })
+
+            raise TopUpTransactionError, "Can't transfer the amount of 0.5 gwx to the specified wallet." unless result["data"]["attributes"]["status"] == "success"
+          elsif result["data"]["attributes"]["transactionDetails"]["status"] === 'success' && result["data"]["attributes"]["quantity"].to_f  === 500000
+            result = GwxCashierClient.create_xem_transaction(transaction_params: {
+              source_wallet_address: Rails.application.secrets.gwx_distribution_wallet,
+              destination_wallet_address: self.gwx_wallet_address,
+              quantity: 1.25
+            })
+
+            raise TopUpTransactionError, "Can't transfer the amount of 1.25 gwx to the specified wallet." unless result["data"]["attributes"]["status"] == "success"
+          end
         end
       end
     end
