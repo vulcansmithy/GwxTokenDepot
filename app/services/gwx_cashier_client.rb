@@ -10,5 +10,9 @@ class GwxCashierClient
     def get_transaction(args)
       get("/transactions/#{args[:id]}")
     end
+
+    def create_xem_transaction(args)
+      post("/transactions/xem", body: args[:transaction_params])
+    end
   end
 end
