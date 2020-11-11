@@ -77,5 +77,4 @@ gem "httparty",                 "0.17.0"   # https://github.com/jnunemaker/httpa
 gem "nem-ruby",                 "0.0.13"   # https://github.com/44uk/nem-ruby
 gem "attr_encrypted",           "3.1.0"    # https://github.com/attr-encrypted/attr_encrypted
 gem "bip44",                    "0.2.18"   # https://github.com/wuminzhe/bip44
-gem "awesome_print",          "1.8.0"    # https://github.com/awesome-print/awesome_print
-gem "rspec-rails",              "3.8.1"    # https://github.com/rspec/rspec-rails
+gem "awesome_print",          "1.8.0"      # https://github.com/awesome-print/awesome_print
